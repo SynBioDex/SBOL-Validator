@@ -30,38 +30,39 @@ function sbolvalidator_html_form() {
 
 function validate() {
     if(isset($_POST["submit"])) {
-            if ( ! function_exists( 'wp_handle_upload' ) ) {
-                require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        if ( ! function_exists( 'wp_handle_upload' ) ) {
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        }
+
+        $movefile = wp_handle_upload($_FILES["fileToUpload"]["tmp_name"]);
+        var_dump($movefile);
+        if ($movefile && !isset($movefile['error'])) {
+            $pathparts = pathinfo($movefile['file']);
+            $command = "java -jar " . plugin_dir_path( __FILE__ ) . "libSBOLj-2.0.0-withDependencies.jar ";
+            $command = $command . $movefile['file'] . " ";
+            $command = $command . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
+
+            if(isset($_POST["noncompliance"])) {
+                $command = $command . "-n ";
             }
 
-            $movefile = wp_handle_upload($_FILES["fileToUpload"]["tmp_name"]);
-            if ($movefile && !isset($movefile['error'])) {
-                $pathparts = pathinfo($movefile['file']);
-                $command = "java -jar " . plugin_dir_path( __FILE__ ) . "libSBOLj-2.0.0-withDependencies.jar ";
-                $command = $command . $movefile['file'] . " ";
-	            $command = $command . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
-
-                if(isset($_POST["noncompliance"])) {
-                    $command = $command . "-n ";
-                }
-
-                if(isset($_POST["incomplete"])) {
-                    $command = $command . "-i ";
-                }
-                if($_POST["prefix"] != "") {
-                    $command = $command . "-p " . escapeshellarg($_POST["prefix"]) . " ";
-                }
-		$command = $command . '2>&1';
-                echo $command;
-                echo shell_exec($command);
-		//$zip->open($target_zip, ZipArchive::CREATE);
-		//$zip->addFile( $target_file . '.validated.sbol', $target_file  . '.rdf');
-		echo "<br>";
-		echo '<a href="' . site_url() . '/' . $target_file . '-validated.' . $extension . '">Converted and adjusted SBOL</a>';
-            } 
-            else {
-                    echo "Sorry, there was an error uploading your file.";
+            if(isset($_POST["incomplete"])) {
+                $command = $command . "-i ";
             }
+            if($_POST["prefix"] != "") {
+                $command = $command . "-p " . escapeshellarg($_POST["prefix"]) . " ";
+            }
+    		$command = $command . '2>&1';
+            echo $command;
+            echo shell_exec($command);
+    		//$zip->open($target_zip, ZipArchive::CREATE);
+    		//$zip->addFile( $target_file . '.validated.sbol', $target_file  . '.rdf');
+    		echo "<br>";
+    		echo '<a href="' . site_url() . '/' . $target_file . '-validated.' . $extension . '">Converted and adjusted SBOL</a>';
+        } 
+        else {
+                echo "Sorry, there was an error uploading your file.";
+        }
     }
 }
 function sbolvalidator_shortcode(){
