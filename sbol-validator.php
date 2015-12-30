@@ -36,7 +36,6 @@ function validate() {
         $extension = pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION);
     	//$zip = new ZipArchive;
     	$target_zip = $target_file . '.zip';
-    	$target_file = $target_file . '.' . $extension;
         if (file_exists($target_file)) {
             echo "Sorry, file already exists.";
             $uploadOk = 0;
@@ -48,7 +47,7 @@ function validate() {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 $command = "java -jar /home/tang/zachz/Downloads/libSBOLj-2.0.0-withDependencies.jar ";
                 $command = $command . "/home/tang/zachz/public_html/" . $target_file . " ";
-	        $command = $command . "-o /home/tang/zachz/public_html/" . $target_file . ".validated." . $extension . " ";
+	        $command = $command . "-o /home/tang/zachz/public_html/" . $target_file . "-validated." . $extension . " ";
 
                 if(isset($_POST["noncompliance"])) {
                     $command = $command . "-n ";
