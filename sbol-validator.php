@@ -81,9 +81,9 @@ function sbolvalidator_shortcode()
 	if(sbolvalidator_javatest() == "yes") {
 		if (isset($_POST["submit"])) {
 			sbolvalidator_validate();
-		} else {
-			sbolvalidator_html_form();
+			echo "<hr>";
 		}
+		sbolvalidator_html_form();
 	} else {
 		echo "Sorry, it appears that your server does not allow Wordpress to run Java.";
 	}
