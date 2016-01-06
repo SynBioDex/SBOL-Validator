@@ -34,11 +34,9 @@ function validate() {
         $target_file = $target_dir . uniqid();
         $uploadOk = 1;
         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	echo 'before';
-	$zip = new ZipArchive;
-	echo 'after';
-	$target_zip = $target_file . '.zip';
-	$target_file = $target_file . '.sbol';
+    	//$zip = new ZipArchive;
+    	$target_zip = $target_file . '.zip';
+    	$target_file = $target_file . '.sbol';
         if (file_exists($target_file)) {
             echo "Sorry, file already exists.";
             $uploadOk = 0;
@@ -75,7 +73,6 @@ function validate() {
         }
     }
 }
-
 function sbolvalidator_shortcode(){
 	validate();
 	sbolvalidator_html_form();
