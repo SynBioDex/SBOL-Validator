@@ -65,7 +65,7 @@ function validate() {
 		//$zip->open($target_zip, ZipArchive::CREATE);
 		//$zip->addFile( $target_file . '.validated.sbol', $target_file  . '.rdf');
 		echo "<br>";
-		echo '<a href="' . site_url() . '/' . $target_zip . '">Download</a>';
+		echo '<a href="' . site_url() . '/' . $target_file . '">Download</a>';
             } 
             else {
                     echo "Sorry, there was an error uploading your file.";
