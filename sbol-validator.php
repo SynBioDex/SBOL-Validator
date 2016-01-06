@@ -8,6 +8,7 @@ Author:      Zach Zundel
 Author URI:  http://www.async.ece.utah.edu/~zachz
  */
 
+$java = "no";
 
 //Print the form
 function sbolvalidator_html_form()
@@ -77,12 +78,23 @@ function sbolvalidator_validate()
 //If a POST request has been submitted, run validate method. Otherwise, display form.
 function sbolvalidator_shortcode()
 {
-	if (isset($_POST["submit"])) {
-		sbolvalidator_validate();
+	if($result == "yes") {
+		if (isset($_POST["submit"])) {
+			sbolvalidator_validate();
+		} else {
+			sbolvalidator_html_form();
+		}
 	} else {
-		sbolvalidator_html_form();
+		echo "Sorry, it appears that your server does not allow Wordpress to run Java.";
 	}
 }
+
+//Test for java on activation
+function sbolvalidator_activate() {
+	$result = exec('java -version > NUL && echo yes || echo no');
+}
+
+register_activation_hook( __FILE__, 'sbolvalidator_activate' );
 
 //Add shortcode for Wordpress use
 add_shortcode('sbolvalidator', 'sbolvalidator_shortcode');
