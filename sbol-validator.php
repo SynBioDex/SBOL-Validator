@@ -1,4 +1,13 @@
 <?php
+/*
+Plugin Name: SBOL Validator
+Plugin URI:  https://github.com/SynBioDex/SBOL-Validator
+Description: Validates 
+Version:     1.0
+Author:      Zach Zundel
+Author URI:  http://www.async.ece.utah.edu/~zachz
+ */
+
 
 //Print the form
 function sbolvalidator_html_form()
@@ -21,7 +30,7 @@ function sbolvalidator_html_form()
 }
 
 //Upload file and run validation
-function validate()
+function sbolvalidator_validate()
 {
 	//Import Wordpress upload functions
 	if (!function_exists('wp_handle_upload')) {
@@ -69,7 +78,7 @@ function validate()
 function sbolvalidator_shortcode()
 {
 	if (isset($_POST["submit"])) {
-		validate();
+		sbolvalidator_validate();
 	} else {
 		sbolvalidator_html_form();
 	}
