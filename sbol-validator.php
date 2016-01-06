@@ -3,7 +3,7 @@
 Plugin Name: SBOL Validator
 Plugin URI:  https://github.com/SynBioDex/SBOL-Validator
 Description: Validates 
-Version:     1.1
+Version:     1.2
 Author:      Zach Zundel
 Author URI:  http://www.async.ece.utah.edu/~zachz
  */
