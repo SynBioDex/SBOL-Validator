@@ -33,8 +33,8 @@ function validate() {
         if ( ! function_exists( 'wp_handle_upload' ) ) {
             require_once( ABSPATH . 'wp-admin/includes/file.php' );
         }
-
-        $movefile = wp_handle_upload($_FILES["fileToUpload"]["tmp_name"]);
+        $upload_overrides = array( 'test_form' => false );
+        $movefile = wp_handle_upload($_FILES["fileToUpload"]["tmp_name"], $upload_overrides);
         var_dump($movefile);
         if ($movefile && !isset($movefile['error'])) {
             $pathparts = pathinfo($movefile['file']);
