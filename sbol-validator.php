@@ -90,7 +90,7 @@ function sbolvalidator_shortcode()
 }
 
 //Test for java 
-function sbolvalidator_navatest() {
+function sbolvalidator_javatest() {
 	$result = exec('java -version > NUL && echo yes || echo no');
 }
 
