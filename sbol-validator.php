@@ -33,10 +33,10 @@ function validate() {
         $target_dir = "uploads/";
         $target_file = $target_dir . uniqid();
         $uploadOk = 1;
-        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        $extension = pathinfo(basename($_FILES["fileToUpload"]["name"]),PATHINFO_EXTENSION);
     	//$zip = new ZipArchive;
     	$target_zip = $target_file . '.zip';
-    	$target_file = $target_file . '.sbol';
+    	$target_file = $target_file . '.' . $extension;
         if (file_exists($target_file)) {
             echo "Sorry, file already exists.";
             $uploadOk = 0;
@@ -48,7 +48,7 @@ function validate() {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 $command = "java -jar /home/tang/zachz/Downloads/libSBOLj-2.0.0-withDependencies.jar ";
                 $command = $command . "/home/tang/zachz/public_html/" . $target_file . " ";
-	        $command = $command . "-o /home/tang/zachz/public_html/" . $target_file . ".validated.sbol ";
+	        $command = $command . "-o /home/tang/zachz/public_html/" . $target_file . ".validated." . $extension . " ";
 
                 if(isset($_POST["noncompliance"])) {
                     $command = $command . "-n ";
@@ -65,7 +65,7 @@ function validate() {
 		//$zip->open($target_zip, ZipArchive::CREATE);
 		//$zip->addFile( $target_file . '.validated.sbol', $target_file  . '.rdf');
 		echo "<br>";
-		echo '<a href="' . site_url() . '/' . $target_file . '">Download</a>';
+		echo '<a href="' . site_url() . '/' . $target_file . '.validated.' . $extension . '">Download</a>';
             } 
             else {
                     echo "Sorry, there was an error uploading your file.";
