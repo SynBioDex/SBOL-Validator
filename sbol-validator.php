@@ -14,14 +14,20 @@ $java = "no";
 function sbolvalidator_html_form()
 {
 	echo "<form action=\"" . esc_url($_SERVER['REQUEST_URI']) . "\" method=\"post\" enctype=\"multipart/form-data\">";
-	echo "Select SBOL file to validate:";
+	echo "Select SBOL file to validate: ";
 	echo "<input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\">";
 	echo "<br>";
 	echo "Allow noncompliance: ";
 	echo "<input type=\"checkbox\" name=\"noncompliant\" id=\"noncompliant\">";
 	echo "<br>";
-	echo "Allow incompleteness:";
+	echo "Allow incompleteness: ";
 	echo "<input type=\"checkbox\" name=\"incomplete\" id=\"incomplete\">";
+	echo "<br>";
+	echo "Check best practices: ";
+	echo "<input type=\"checkbox\" name=\"best\" id=\"best\">";
+	echo "<br>";
+	echo "Include top-levels in URI: ";
+	echo "<input type=\"checkbox\" name=\"toplevel\" id=\"toplevel\">";
 	echo "<br>";
 	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
 	echo "<input type=\"text\" name=\"prefix\" id=\"prefix\">";
@@ -58,6 +64,12 @@ function sbolvalidator_validate()
 		}
 		if ($_POST["prefix"] != "") {
 			$command = $command . "-p " . escapeshellarg($_POST["prefix"]) . " ";
+		}
+		if(isset($_POST["best"])) {
+			$command = $command . "-b "; 
+		}
+		if(isset($_POST["toplevel"])) {
+			$command = $command . "-t "; 
 		}
 		$command = $command . '2>&1';
 		
