@@ -17,6 +17,9 @@ function sbolvalidator_html_form()
 	echo "Select SBOL file to validate: ";
 	echo "<input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\">";
 	echo "<br>";
+	echo "OR input SBOL file to validate: ";
+	echo "<input type=\"textarea\" name=\"textToUpload\" id=\"textToUpload\">";
+	echo "<br>";
 	echo "Allow noncompliance: ";
 	echo "<input type=\"checkbox\" name=\"noncompliant\" id=\"noncompliant\">";
 	echo "<br>";
@@ -28,6 +31,11 @@ function sbolvalidator_html_form()
 	echo "<br>";
 	echo "Include top-levels in URI: ";
 	echo "<input type=\"checkbox\" name=\"toplevel\" id=\"toplevel\">";
+	echo "<br>";
+	echo "Output validated file as GenBank: ";
+	echo "<input type=\"checkbox\" name=\"genbank\" id=\"genbank\">";
+	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
+	echo "<input type=\"text\" name=\"garg\" id=\"garg\">";
 	echo "<br>";
 	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
 	echo "<input type=\"text\" name=\"prefix\" id=\"prefix\">";
@@ -46,17 +54,25 @@ function sbolvalidator_validate()
 	//Allow upload without form and allow upload of non-media filetypes
 	$upload_overrides = array('test_form' => false, 'mimes' => array(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION) => $_FILES["fileToUpload"]["type"]));
 	
-	//Add file to Wordpress uploads
-	$movefile = wp_handle_upload($_FILES["fileToUpload"], $upload_overrides);
+	$movefile = [];
+
+	if($_POST["textToUpload"] != "") {
+		file_put_contents("/var/www/html/temp/input", $_POST["textToUpload"]);
+		$movefile = wp_handle_upload("/var/www/html/temp/input", $upload_overrides);
+	}
+	else {
+		//Add file to Wordpress uploads
+		$movefile = wp_handle_upload($_FILES["fileToUpload"], $upload_overrides);
+	}
 
 	//If upload is successful, run validation. Otherwise, explain failure.
 	if ($movefile && !isset($movefile['error'])) {
 		//Build shell command from form
 		$pathparts = pathinfo($movefile['file']);
-		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.0-withDependencies.jar ";
+		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $movefile['file'] . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
-		if (isset($_POST["noncompliance"])) {
+		if (isset($_POST["noncompliant"])) {
 			$command = $command . "-n ";
 		}
 		if (isset($_POST["incomplete"])) {
@@ -70,6 +86,9 @@ function sbolvalidator_validate()
 		}
 		if(isset($_POST["toplevel"])) {
 			$command = $command . "-t "; 
+		}
+		if (isset($_POST["genbank"]) && $_POST["garg"] != "") {
+			$command = $command . "-g " . escapeshellarg($_POST["garg"]) . " ";
 		}
 		$command = $command . '2>&1';
 		
