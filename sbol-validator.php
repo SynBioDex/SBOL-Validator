@@ -56,19 +56,22 @@ function sbolvalidator_validate()
 	
 	$movefile = [];
 
-	if($_POST["textToUpload"] != "") {
+
+	if(isset($_POST["textToUpload"])) {
 		file_put_contents("/var/www/html/temp/input", $_POST["textToUpload"]);
-		$movefile = wp_handle_upload("/var/www/html/temp/input", $upload_overrides);
+		$filepath = "/var/www/html/temp/input";
 	}
 	else {
 		//Add file to Wordpress uploads
 		$movefile = wp_handle_upload($_FILES["fileToUpload"], $upload_overrides);
+		$filepath = $movefile["path"];
 	}
+
 
 	//If upload is successful, run validation. Otherwise, explain failure.
 	if ($movefile && !isset($movefile['error'])) {
 		//Build shell command from form
-		$pathparts = pathinfo($movefile['file']);
+		$pathparts = pathinfo($filepath);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $movefile['file'] . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
@@ -91,7 +94,7 @@ function sbolvalidator_validate()
 			$command = $command . "-g " . escapeshellarg($_POST["garg"]) . " ";
 		}
 		$command = $command . '2>&1';
-		
+		echo $command;
 		//Execute shell command
 		$result = shell_exec($command);
 		
@@ -109,11 +112,15 @@ function sbolvalidator_validate()
 //If a POST request has been submitted, run validate method. Otherwise, display form.
 function sbolvalidator_shortcode()
 {
+	echo "testing for java";
 	if(sbolvalidator_javatest() == "yes") {
+		echo "testing for submission";
 		if (isset($_POST["submit"])) {
+			echo "Something ws submitted?";
 			sbolvalidator_validate();
 			echo "<hr>";
 		}
+		echo "form was drawn!";
 		sbolvalidator_html_form();
 	} else {
 		echo "Sorry, it appears that your server does not allow Wordpress to run Java.";
