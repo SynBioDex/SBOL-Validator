@@ -8,6 +8,7 @@ Author:      Zach Zundel
 Author URI:  http://www.async.ece.utah.edu/~zachz
  */
 
+
 $java = "no";
 
 //Print the form
@@ -29,14 +30,16 @@ function sbolvalidator_html_form()
 	echo "Check best practices: ";
 	echo "<input type=\"checkbox\" name=\"best\" id=\"best\">";
 	echo "<br>";
-	echo "Include top-levels in URI: ";
+	echo "Include types in URI: ";
 	echo "<input type=\"checkbox\" name=\"toplevel\" id=\"toplevel\">";
 	echo "<br>";
+/*
 	echo "Output validated file as GenBank: ";
 	echo "<input type=\"checkbox\" name=\"genbank\" id=\"genbank\">";
-	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
+	echo "Enter a URI for ComponentDefinition to convert:";
 	echo "<input type=\"text\" name=\"garg\" id=\"garg\">";
 	echo "<br>";
+*/
 	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
 	echo "<input type=\"text\" name=\"prefix\" id=\"prefix\">";
 	echo "<br>";
@@ -55,25 +58,30 @@ function sbolvalidator_validate()
 	$upload_overrides = array('test_form' => false, 'mimes' => array(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION) => $_FILES["fileToUpload"]["type"]));
 	
 	$movefile = [];
+	$uploaded = false;
+	$filepath = "";
 
-
-	if(isset($_POST["textToUpload"])) {
+	if($_POST["textToUpload"] != "") {
 		file_put_contents("/var/www/html/temp/input", $_POST["textToUpload"]);
 		$filepath = "/var/www/html/temp/input";
+		$uploaded = true;
 	}
 	else {
 		//Add file to Wordpress uploads
 		$movefile = wp_handle_upload($_FILES["fileToUpload"], $upload_overrides);
-		$filepath = $movefile["path"];
+		if($movefile && !isset($movefile['error'])) {
+			$filepath = $movefile['file'];
+			$uploaded = true;
+		}
 	}
 
 
 	//If upload is successful, run validation. Otherwise, explain failure.
-	if ($movefile && !isset($movefile['error'])) {
+	if ($uploaded) {
 		//Build shell command from form
 		$pathparts = pathinfo($filepath);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
-		$command = $command . $movefile['file'] . " ";
+		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
 		if (isset($_POST["noncompliant"])) {
 			$command = $command . "-n ";
@@ -94,7 +102,7 @@ function sbolvalidator_validate()
 			$command = $command . "-g " . escapeshellarg($_POST["garg"]) . " ";
 		}
 		$command = $command . '2>&1';
-		echo $command;
+
 		//Execute shell command
 		$result = shell_exec($command);
 		
@@ -112,15 +120,12 @@ function sbolvalidator_validate()
 //If a POST request has been submitted, run validate method. Otherwise, display form.
 function sbolvalidator_shortcode()
 {
-	echo "testing for java";
+	$_POST = array_map('stripslashes_deep', $_POST);
 	if(sbolvalidator_javatest() == "yes") {
-		echo "testing for submission";
 		if (isset($_POST["submit"])) {
-			echo "Something ws submitted?";
 			sbolvalidator_validate();
 			echo "<hr>";
 		}
-		echo "form was drawn!";
 		sbolvalidator_html_form();
 	} else {
 		echo "Sorry, it appears that your server does not allow Wordpress to run Java.";
