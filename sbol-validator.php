@@ -43,6 +43,7 @@ function sbolvalidator_html_form()
 	echo "<br>";
 	echo "<input type=\"submit\" value=\"Upload for Validation\" name=\"submit\">";
 	echo "</form>";*/
+	echo "Printing form";
 	echo htmlspecialchars(file_get_contents("form.html"));
 }
 
