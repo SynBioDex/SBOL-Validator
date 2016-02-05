@@ -13,36 +13,7 @@ $java = "no";
 
 //Print the form
 function sbolvalidator_html_form()
-{/*
-	echo "<form action=\"" . esc_url($_SERVER['REQUEST_URI']) . "\" method=\"post\" enctype=\"multipart/form-data\">";
-	echo "Select SBOL file to validate: ";
-	echo "<input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\">";
-	echo "<br>";
-	echo "OR input SBOL file to validate: ";
-	echo "<input type=\"textarea\" name=\"textToUpload\" id=\"textToUpload\">";
-	echo "<br>";
-	echo "Allow noncompliance: ";
-	echo "<input type=\"checkbox\" name=\"noncompliant\" id=\"noncompliant\">";
-	echo "<br>";
-	echo "Allow incompleteness: ";
-	echo "<input type=\"checkbox\" name=\"incomplete\" id=\"incomplete\">";
-	echo "<br>";
-	echo "Check best practices: ";
-	echo "<input type=\"checkbox\" name=\"best\" id=\"best\">";
-	echo "<br>";
-	echo "Include types in URI: ";
-	echo "<input type=\"checkbox\" name=\"toplevel\" id=\"toplevel\">";
-	echo "<br>";
-	echo "Output validated file as GenBank: ";
-	echo "<input type=\"checkbox\" name=\"genbank\" id=\"genbank\">";
-	echo "Enter a URI for ComponentDefinition to convert:";
-	echo "<input type=\"text\" name=\"garg\" id=\"garg\">";
-	echo "<br>";
-	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
-	echo "<input type=\"text\" name=\"prefix\" id=\"prefix\">";
-	echo "<br>";
-	echo "<input type=\"submit\" value=\"Upload for Validation\" name=\"submit\">";
-	echo "</form>";*/
+{
 	$dir = pathinfo(__FILE__)["dirname"];
 	$form = file_get_contents($dir . "/form.html");
 	$css = file_get_contents($dir . "/view.css"); 
