@@ -43,8 +43,13 @@ function sbolvalidator_html_form()
 	echo "<br>";
 	echo "<input type=\"submit\" value=\"Upload for Validation\" name=\"submit\">";
 	echo "</form>";*/
-	echo "Printing form";
-	echo htmlspecialchars(file_get_contents("form.html"));
+	$dir = pathinfo(__FILE__)["dirname"];
+	$form = file_get_contents($dir . "/form.html");
+	$css = file_get_contents($dir . "/view.css"); 
+	echo "<style>" . $css . "</style>";
+	echo "<img src=\"http://www.async.ece.utah.edu/wp-content/plugins/sbol-validator/top.png\">";
+	echo $form;
+	echo "<img src=\"http://www.async.ece.utah.edu/wp-content/plugins/sbol-validator/bottom.png\">";
 }
 
 //Upload file and run validation
