@@ -55,31 +55,48 @@ function sbolvalidator_validate()
 	//If upload is successful, run validation. Otherwise, explain failure.
 	if ($uploaded) {
 		//Build shell command from form
+		$wants20 = false;
 		$pathparts = pathinfo($filepath);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
+		if (isset($_POST["11to20"])) {
+			$wants20 = true;
+		}
+		if (isset($_POST["gbto20"])) {
+			$command = $command . "-g ";
+		}
+		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
+			$command = $command . "-c " . $_POST["cdUri"] . " ";
+		}
 		if (isset($_POST["noncompliant"])) {
 			$command = $command . "-n ";
 		}
 		if (isset($_POST["incomplete"])) {
 			$command = $command . "-i ";
 		}
-		if ($_POST["prefix"] != "") {
-			$command = $command . "-p " . escapeshellarg($_POST["prefix"]) . " ";
+		if ($_POST["uriForConversion"] != "") {
+			$command = $command . "-p " . escapeshellarg($_POST["uriForConversion"]) . " ";
 		}
-		if(isset($_POST["best"])) {
+		if($_POST["version"] != "") {
+			$command = $command . "-v " . escapeshellarg($_POST["version"]) . " ";
+		}
+		if (isset($_POST["uriType"])) {
+			$command = $command . "-t ";
+		}
+		if(isset($_POST["bestPractices"])) {
 			$command = $command . "-b "; 
 		}
-		if(isset($_POST["toplevel"])) {
-			$command = $command . "-t "; 
+		if(isset($_POST["failOnFirst"])) {
+			$command = $command . "-f ";
 		}
-		if (isset($_POST["genbank"]) && $_POST["garg"] != "") {
-			$command = $command . "-g " . escapeshellarg($_POST["garg"]) . " ";
+		if(isset($_POST["fullStack"]) && isset($_POST["failOnFirst"])) {
+			$command = $command . "-d ";
 		}
 		$command = $command . '> output.txt 2>&1';
 
 		//Execute shell command
+		echo $command;
 		$result = shell_exec($command);
 		
 		//Print result, and if necessary, print link to valid SBOL
