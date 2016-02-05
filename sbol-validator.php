@@ -13,7 +13,7 @@ $java = "no";
 
 //Print the form
 function sbolvalidator_html_form()
-{
+{/*
 	echo "<form action=\"" . esc_url($_SERVER['REQUEST_URI']) . "\" method=\"post\" enctype=\"multipart/form-data\">";
 	echo "Select SBOL file to validate: ";
 	echo "<input type=\"file\" name=\"fileToUpload\" id=\"fileToUpload\">";
@@ -33,18 +33,17 @@ function sbolvalidator_html_form()
 	echo "Include types in URI: ";
 	echo "<input type=\"checkbox\" name=\"toplevel\" id=\"toplevel\">";
 	echo "<br>";
-/*
 	echo "Output validated file as GenBank: ";
 	echo "<input type=\"checkbox\" name=\"genbank\" id=\"genbank\">";
 	echo "Enter a URI for ComponentDefinition to convert:";
 	echo "<input type=\"text\" name=\"garg\" id=\"garg\">";
 	echo "<br>";
-*/
 	echo "Enter a URI prefix for 1.0 to 2.0 conversion if desired:";
 	echo "<input type=\"text\" name=\"prefix\" id=\"prefix\">";
 	echo "<br>";
 	echo "<input type=\"submit\" value=\"Upload for Validation\" name=\"submit\">";
-	echo "</form>";
+	echo "</form>";*/
+	echo htmlspecialchars(file_get_contents("form.html"));
 }
 
 //Upload file and run validation
@@ -101,13 +100,13 @@ function sbolvalidator_validate()
 		if (isset($_POST["genbank"]) && $_POST["garg"] != "") {
 			$command = $command . "-g " . escapeshellarg($_POST["garg"]) . " ";
 		}
-		$command = $command . '2>&1';
+		$command = $command . '> output.txt 2>&1';
 
 		//Execute shell command
 		$result = shell_exec($command);
 		
 		//Print result, and if necessary, print link to valid SBOL
-		echo $result;
+		echo file_get_contents("output.txt");
 		if (trim($result) == "Validation successful, no errors.") {
 			echo "<br>";
 			echo '<a href="' . $movefile["url"] . '">Converted and adjusted SBOL</a>';
