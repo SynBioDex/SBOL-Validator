@@ -31,7 +31,7 @@ function sbolvalidator_validate()
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
 	}
 	//Allow upload without form and allow upload of non-media filetypes
-	$upload_overrides = array('test_form' => false, 'mimes' => array(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION) => $_FILES["fileToUpload"]["type"]));
+	$upload_overrides = array('test_form' => false, 'mimes' => array(pathinfo($_FILES["sbol_file"]["name"], PATHINFO_EXTENSION) => $_FILES["sbol_file"]["type"]));
 	
 	$movefile = [];
 	$uploaded = false;
@@ -44,7 +44,7 @@ function sbolvalidator_validate()
 	}
 	else {
 		//Add file to Wordpress uploads
-		$movefile = wp_handle_upload($_FILES["fileToUpload"], $upload_overrides);
+		$movefile = wp_handle_upload($_FILES["sbol_file"], $upload_overrides);
 		if($movefile && !isset($movefile['error'])) {
 			$filepath = $movefile['file'];
 			$uploaded = true;
