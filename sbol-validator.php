@@ -105,7 +105,7 @@ function sbolvalidator_validate()
 		//Print result, and if necessary, print link to valid SBOL
 		echo $result;
 		
-		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 ) {
+		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 && strpos($result, 'Validation failed') !== false) {
 			echo "<br>";
 			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '>Converted and adjusted SBOL</a>';
 		}
