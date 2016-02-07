@@ -38,18 +38,16 @@ function sbolvalidator_validate()
 	$filepath = "";
 
 	if($_POST["textToUpload"] != "") {
-		file_put_contents("/var/www/html/temp/input", $_POST["textToUpload"]);
-		$filepath = "/var/www/html/temp/input";
-		$uploaded = true;
+		$movefile = wp_handle_bits("/var/www/html/temp/input", $_POST["textToUpload"]);
 	}
 	else {
 		//Add file to Wordpress uploads
 		$movefile = wp_handle_upload($_FILES["sbol_file"], $upload_overrides);
+	}
 		if($movefile && !isset($movefile['error'])) {
 			$filepath = $movefile['file'];
 			$uploaded = true;
 		}
-	}
 
 
 	//If upload is successful, run validation. Otherwise, explain failure.
@@ -60,7 +58,12 @@ function sbolvalidator_validate()
 		var_dump($pathparts);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
-		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
+		$command = $command . "-o " . $pathparts['filename'] . "-validated.";
+		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
+			$command = $command . ".gb ";
+		} else {
+			$command = $command . $pathparts['extension'] . " ";
+		}
 		if (isset($_POST["11to20"])) {
 			$wants20 = true;
 		}
