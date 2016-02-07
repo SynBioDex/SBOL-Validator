@@ -146,7 +146,10 @@ function startsWith($haystack, $needle) {
 }
 
 function returnUrlWithoutExtension($string) {
-	$extensionPosition = strpos($string, ".", strlen($haystack) - 10);
+	echo $string;
+	$extensionPosition = strpos($string, ".", strlen($string) - 10);
+	echo $extensionPosition;
+	echo substr($string, 0, $extensionPosition);
 	return substr($string, 0, $extensionPosition);
 }
 
