@@ -57,7 +57,7 @@ function sbolvalidator_validate()
 		$pathparts = pathinfo($movefile["file"]);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
-		$command = $command . "-o " $pathparts['dirname'] . "/". $pathparts['filename'] . "-validated.";
+		$command = $command . "-o " . $pathparts['dirname'] . "/". $pathparts['filename'] . "-validated.";
 		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			$command = $command . "gb ";
 		} else {
@@ -107,7 +107,7 @@ function sbolvalidator_validate()
 		
 		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 ) {
 			echo "<br>";
-			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '>Converted and adjusted SBOL</a>';
+			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '">Converted and adjusted SBOL</a>';
 		}
 		if(isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			echo "<br>";
