@@ -4,7 +4,7 @@ function convertToGenBank(checkbox)
     if (!checkbox.checked)
     {
         document.getElementById("element_3_4").disabled = true;
-	document.getElementById("element_3_4").value = "";
+		document.getElementById("element_3_4").value = "";
     }
 	else {
 		document.getElementById("element_3_4").disabled = false;
@@ -15,7 +15,7 @@ function failOnFirstError(checkbox)
     if (!checkbox.checked)
     {
         document.getElementById("element_5_5").disabled = true;
-	document.getElementById("element_5_5").checked = false;
+		document.getElementById("element_5_5").checked = false;
     }
 	else {
 		document.getElementById("element_5_5").disabled = false;
@@ -77,15 +77,12 @@ function failOnFirstError(checkbox)
 	<input id="element_5_5" name="fullStack" class="element checkbox" type="checkbox" value="1" disabled />
 	<label class="choice" for="element_5_5">Display full stack trace of error</label>
 </div>
-
-		</span> 
+	</span> 
+		</li>			
+			<li class="buttons">
+			<input type="hidden" name="form_id" value="1098960" />    
+			<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
 		</li>
-			
-					<li class="buttons">
-			    <input type="hidden" name="form_id" value="1098960" />
-			    
-				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
-		</li>
-			</ul>
-		</form>
-</div>	
+	</ul>
+</form>
+</div>

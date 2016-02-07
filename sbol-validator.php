@@ -57,6 +57,7 @@ function sbolvalidator_validate()
 		//Build shell command from form
 		$wants20 = false;
 		$pathparts = pathinfo($filepath);
+		var_dump($pathparts);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated." . $pathparts['extension'] . " ";
@@ -105,6 +106,10 @@ function sbolvalidator_validate()
 		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 ) {
 			echo "<br>";
 			echo '<a href="' . $movefile["url"] . '">Converted and adjusted SBOL</a>';
+		}
+		if(isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
+			echo "<br>";
+			echo '<a href="' . $movefile["url"] . '">Converted GenBank file/a>';
 		}
 		
 	} else {
