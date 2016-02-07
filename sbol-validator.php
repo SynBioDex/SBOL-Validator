@@ -94,17 +94,19 @@ function sbolvalidator_validate()
 			$command = $command . "-d ";
 		}
 		$command = $command . '> output.txt 2>&1';
-
-		//Execute shell command
-		echo $command;
-		$result = shell_exec($command);
 		
+		//Execute shell command
+		$result = shell_exec($command);
+		$result = file_get_contents("output.txt");
+	
 		//Print result, and if necessary, print link to valid SBOL
-		echo file_get_contents("output.txt");
-		if (trim($result) == "Validation successful, no errors.") {
+		echo $result;
+		
+		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 ) {
 			echo "<br>";
 			echo '<a href="' . $movefile["url"] . '">Converted and adjusted SBOL</a>';
 		}
+		
 	} else {
 		echo "Sorry, there was an error uploading your file. <br><b>Wordpress says: " . $movefile['error'] . '</b>';
 	}
@@ -130,6 +132,10 @@ function sbolvalidator_javatest() {
 	return exec('java -version > NUL && echo yes || echo no');
 }
 
+function startsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+}
 
 //Add shortcode for Wordpress use
 add_shortcode('sbolvalidator', 'sbolvalidator_shortcode');
