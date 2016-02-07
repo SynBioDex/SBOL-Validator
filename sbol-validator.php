@@ -108,11 +108,11 @@ function sbolvalidator_validate()
 		
 		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 ) {
 			echo "<br>";
-			echo '<a href="' . $movefile["url"] . '">Converted and adjusted SBOL</a>';
+			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '>Converted and adjusted SBOL</a>';
 		}
 		if(isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			echo "<br>";
-			echo '<a href="' . $movefile["url"] . '">Converted GenBank file</a>';
+			echo '<a href="'. returnUrlWithoutExtension($movefile["url"]) . '-validated.gb">Converted GenBank file</a>';
 		}
 		
 	} else {
@@ -143,6 +143,11 @@ function sbolvalidator_javatest() {
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end
     return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+}
+
+function returnUrlWithoutExtension($string) {
+	$extensionPosition = strpos($string, ".", strlen($haystack) - 10);
+	return substr($string, 0, $extensionPosition);
 }
 
 //Add shortcode for Wordpress use
