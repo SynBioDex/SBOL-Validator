@@ -38,7 +38,7 @@ function sbolvalidator_validate()
 	$filepath = "";
 
 	if($_POST["textToUpload"] != "") {
-		$movefile = wp_handle_bits("/var/www/html/temp/input", $_POST["textToUpload"]);
+		$movefile = wp_handle_bits("input.xml", $_POST["textToUpload"]);
 	}
 	else {
 		//Add file to Wordpress uploads
@@ -54,8 +54,7 @@ function sbolvalidator_validate()
 	if ($uploaded) {
 		//Build shell command from form
 		$wants20 = false;
-		$pathparts = pathinfo($filepath);
-		var_dump($pathparts);
+		$pathparts = pathinfo($movefile["file"]);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['filename'] . "-validated.";
@@ -146,10 +145,7 @@ function startsWith($haystack, $needle) {
 }
 
 function returnUrlWithoutExtension($string) {
-	echo $string;
 	$extensionPosition = strpos($string, ".", strlen($string) - 10);
-	echo $extensionPosition;
-	echo substr($string, 0, $extensionPosition);
 	return substr($string, 0, $extensionPosition);
 }
 
