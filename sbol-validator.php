@@ -112,7 +112,7 @@ function sbolvalidator_validate()
 		}
 		if(isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			echo "<br>";
-			echo '<a href="' . $movefile["url"] . '">Converted GenBank file/a>';
+			echo '<a href="' . $movefile["url"] . '">Converted GenBank file</a>';
 		}
 		
 	} else {
