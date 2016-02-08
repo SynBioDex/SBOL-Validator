@@ -103,9 +103,8 @@ function sbolvalidator_validate()
 		$result = file_get_contents("output.txt");
 	
 		//Print result, and if necessary, print link to valid SBOL
-		echo $result;
-		
-		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 && strpos($result, 'Validation failed') !== false) {
+		echo "<pre>" . $result . "</pre>";	
+		if (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 && strpos($result, 'Validation failed') === false) {
 			echo "<br>";
 			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '">Converted and adjusted SBOL</a>';
 		}
