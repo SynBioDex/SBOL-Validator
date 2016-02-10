@@ -97,7 +97,8 @@ function sbolvalidator_validate()
 			$command = $command . "-d ";
 		}
 		$command = $command . '> output.txt 2>&1';
-		
+	
+		echo $command;	
 		//Execute shell command
 		$result = shell_exec($command);
 		$result = file_get_contents("output.txt");
