@@ -55,24 +55,19 @@ function sbolvalidator_validate()
 		//Build shell command from form
 		$wants20 = false;
 		$pathparts = pathinfo($movefile["file"]);
+		var_dump($pathparts);
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['dirname'] . "/". $pathparts['filename'] . "-validated.";
 		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			$command = $command . "gb ";
 		} else {
-			$command = $command . $pathparts['extension'] . " ";
+			$command = $command . "xml ";
 		}
-		
-		if (isset($_POST["gbto20"]) {
-			$commmand = $command . "xml ";
-		} else {
-			$command = $command . $pathparts['extension'] . " ";
-		}
-		
 		
 		if (isset($_POST["11to20"])) {
 			$wants20 = true;
+		}
 		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
 			$command = $command . "-c " . $_POST["cdUri"] . " ";
 		}
@@ -104,7 +99,7 @@ function sbolvalidator_validate()
 			$command = $command . "-d ";
 		}
 		$command = $command . '> output.txt 2>&1';
-	
+		
 		echo $command;	
 		//Execute shell command
 		$result = shell_exec($command);
@@ -112,7 +107,7 @@ function sbolvalidator_validate()
 	
 		//Print result, and if necessary, print link to valid SBOL
 		echo "<pre>" . $result . "</pre>";	
-		if (isset($_POST["gbto20"]) || startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20 && strpos($result, 'Validation failed') === false) {
+		if ((isset($_POST["gbto20"]) || (startsWith(trim($result), "Converting SBOL Version 1 to SBOL Version 2") && $wants20)) && strpos($result, 'Validation failed') === false) {
 			echo "<br>";
 			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '">Converted and adjusted SBOL</a>';
 		}
