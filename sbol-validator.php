@@ -59,7 +59,7 @@ function sbolvalidator_validate()
 		$command = "java -jar " . plugin_dir_path(__FILE__) . "libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar ";
 		$command = $command . $filepath . " ";
 		$command = $command . "-o " . $pathparts['dirname'] . "/". $pathparts['filename'] . "-validated.";
-		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
+		if (isset($_POST["20togb"])) {
 			$command = $command . "gb ";
 		} else {
 			$command = $command . "xml ";
@@ -68,8 +68,13 @@ function sbolvalidator_validate()
 		if (isset($_POST["11to20"])) {
 			$wants20 = true;
 		}
-		if (isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
-			$command = $command . "-c " . $_POST["cdUri"] . " ";
+		if (isset($_POST["20togb"])) {
+			if($_POST["cdUri"] != "") {
+				$command = $command . "-c " . $_POST["cdUri"] . " ";
+			}
+			else {
+				$command = $command . "-r ";
+			}
 		}
 		if (isset($_POST["gbto20"])) {
 			$command = $command . "-g ";
@@ -111,7 +116,7 @@ function sbolvalidator_validate()
 			echo "<br>";
 			echo '<a href="' . returnUrlWithoutExtension($movefile["url"]) . '-validated.' . $pathparts["extension"] . '">Converted and adjusted SBOL</a>';
 		}
-		if(isset($_POST["20togb"]) && $_POST["cdUri"] != "") {
+		if(isset($_POST["20togb"])) {
 			echo "<br>";
 			echo '<a href="'. returnUrlWithoutExtension($movefile["url"]) . '-validated.gb">Converted GenBank file</a>';
 		}
