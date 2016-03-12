@@ -1,88 +1,153 @@
-<script type="text/javascript">
-function convertToGenBank(checkbox)
-{
-    if (!checkbox.checked)
-    {
-        document.getElementById("element_3_4").disabled = true;
-		document.getElementById("element_3_4").value = "";
-    }
-	else {
-		document.getElementById("element_3_4").disabled = false;
-	}
-}
-function failOnFirstError(checkbox)
-{
-    if (!checkbox.checked)
-    {
-        document.getElementById("element_5_5").disabled = true;
-		document.getElementById("element_5_5").checked = false;
-    }
-	else {
-		document.getElementById("element_5_5").disabled = false;
-	}	
-}
-</script>
-<div id="form_container">					
-			<ul >
-			<form action="#" method="POST" enctype="multipart/form-data">
-					<li id="li_1" >
-		<label class="description" for="element_1">Upload a File </label>
-		<div>
-			<input id="element_1" name="sbol_file" class="element file" type="file"/> 
-		</div>  
-		</li>		<li id="li_2" >
-		<label class="description" for="pasted-sbol">Paste SBOL </label>
-		<div>
-			<textarea id="element_2" name="element_2" class="element textarea medium"></textarea> 
-		</div> 
-		</li>		<li id="li_3" >
-		<label class="description" for="element_3">File Options  </label>
-		<span>
-			<input id="element_3_1" name="11to20" class="element checkbox" type="checkbox" value="1" />
-<label class="choice" for="element_3_1">Convert SBOL 1.1 to SBOL 2.0</label>
-<input id="element_3_2" name="gbto20" class="element checkbox" type="checkbox" value="1" />
-<label class="choice" for="element_3_2">Convert GenBank to SBOL 2.0</label>
-<input id="element_3_3" name="20togb" class="element checkbox" type="checkbox" value="1" onchange="convertToGenBank(this)" />
-<label class="choice" for="element_3_3">Convert SBOL to GenBank</label>
-<div style="padding-left:20px;">
-	<input id="element_3_4" name="cdUri" class="element" type="text" disabled />
-	<label for="element_3_4">URI of ComponentDefinition to convert to GenBank</label>
-</div>
-
-
-		</span> 
-		</li>		<li id="li_4" >
-		<label class="description" for="element_4">Conversion Options </label>
-		<span>
-<input id="element_4_1" name="uriForConversion" class="element" type="text"/>
-<label for="element_4_1">URI Prefix for converted objects</label>
-<input id="element_4_2" name="version" class="element" type="text"/>
-<label for="element_4_2">Version for converted objects</label>
-<input id="element_4_3" name="uriType" type="checkbox" value="1" />
-<label class="choice" for="element_4_3">Include types in URIs</label>
-
-		</span> 
-		</li>		<li id="li_5" >
-		<label class="description" for="element_5">Validation Options </label>
-		<span>
-			<input id="element_5_1" name="noncompliant" class="element checkbox" type="checkbox" value="1" />
-<label class="choice" for="element_5_1">Allow non-compliant URIs</label>
-<input id="element_5_2" name="incomplete" class="element checkbox" type="checkbox" value="1" />
-<label class="choice" for="element_5_2">Allow incomplete SBOL document</label>
-<input id="element_5_3" name="bestPractices" class="element checkbox" type="checkbox" value="1" />
-<label class="choice" for="element_5_3">Check best practices</label>
-<input id="element_5_4" name="failOnFirst" class="element checkbox" type="checkbox" value="1" onchange="failOnFirstError(this)" />
-<label class="choice" for="element_5_4">Fail on first error</label>
-<div style="padding-left:20px;">
-	<input id="element_5_5" name="fullStack" class="element checkbox" type="checkbox" value="1" disabled />
-	<label class="choice" for="element_5_5">Display full stack trace of error</label>
-</div>
-	</span> 
-		</li>			
-			<li class="buttons">
-			<input type="hidden" name="form_id" value="1098960" />    
-			<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
-		</li>
-	</ul>
-</form>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>SBOL Validator</title>
+		<meta name="description" content="Source code generated using layoutit.com" />
+		<meta name="author" content="LayoutIt!" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<h1 style="text-align: center"> SBOL Validator/Converter </h1>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-8">
+					<form class="form" action="validate.php" enctype="multipart/form-data" method="POST">
+						<div class="tabbable" id="tabs-964765">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#upload" data-toggle="tab">Upload File</a>
+								</li>
+								<li>
+									<a href="#paste" data-toggle="tab">Paste File</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<br />
+								<div class="tab-pane active" id="upload">
+									<div class="form-group">
+										<label for="primaryInputFile">
+										SBOL/Genbank File
+										</label>
+										<input type="file" id="primaryInputFile" name="primaryInputFile" />
+										<p class="help-block">
+											Upload an SBOL or GenBank file for validation/conversion.
+										</p>
+									</div>
+								</div>
+								<div class="tab-pane" id="paste">
+									<div class="form-group">
+										<label for="pasteInputFile">
+										SBOL/Genbank File
+										</label>
+										<textarea class="form-control" rows="10" name="pasteInputFile"></textarea>
+										<p class="help-block">
+											Paste an SBOL or GenBank file for validation/conversion.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr />
+						<div class="form-group">
+							<label for="diffInputFile">
+							Comparison file
+							</label>
+							<input type="file" id="diffInputFile" name="diffInputFile"/>
+							<p class="help-block">
+								Upload an SBOL for comparison.
+							</p>
+						</div>
+						<br />
+						<label for="fileOptions">
+						<i>File Options</i>
+						</label>
+						<div class="form-group" id="fileOptions">
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="convertSbol11To20"/> Convert SBOL 1.1 to 2.0
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="convertSbol20ToGenBank" /> Convert SBOL 2.0 to GenBank 
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="convertGenBankToSbol20" /> Convert GenBank to SBOL 2.0
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="genBankComponentDefinition">
+								ComponentDefinition URI for conversion to GenBank
+								</label>
+								<input type="text" class="form-control" id="genBankComponentDefinition" name="genBankComponentDefinition" placeholder="CD URI" />
+							</div>
+						</div>
+						<br />
+						<label for="conversionOptions">
+						<i>Conversion Options</i>
+						</label>
+						<div class="form-group" id="conversionOptions">
+							<div class="form-group">
+								<label for="uriPrefix">
+								URI prefix for converted objects
+								</label>
+								<input type="text" class="form-control" id="uriPrefix" name="uriPrefix" placeholder="URI Prefix" />
+							</div>
+							<div class="form-group">
+								<label for="version">
+								Version for converted objects
+								</label>
+								<input type="text" class="form-control" id="version" name="version" placeholder="Version" />
+							</div>
+						</div>
+						<br />
+						<label for="validationOptions">
+						<i>Validation Options</i>
+						</label>
+						<div class="form-group" id="vallidationOptionsOptions">
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="allowNonCompliantUris" /> Allow non-compliant URIs
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="allowIncompleteDocuments" /> Allow incomplete documents
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="checkBestPractices" /> Check best practices
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="failOnFirstError" /> Fail on first error
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" name="displayFullStackTrace" /> Display full stack trace
+								</label>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-default">Validate</button>
+					</form>
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>

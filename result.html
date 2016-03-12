@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>SBOL Validator</title>
+		<meta name="description" content="Source code generated using layoutit.com" />
+		<meta name="author" content="LayoutIt!" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-8">
+					<h1 class="text-center">SBOL Validator/Converter</h1>
+					<h3 class="text-center">Validation Summary</h3>
+						<div align="center">
+							<h4 class="text-success" tal:condition="request/fileOptions/convertSbol11To20">
+								<span class="glyphicon glyphicon-asterisk" />
+								Converting SBOL 1.1 to 2.0
+							</h4>
+							<h4 class="text-success" tal:condition="request/fileOptions/convertSbol20ToGenBank">
+								<span class="glyphicon glyphicon-asterisk" />
+								Converting SBOL 2.0 to GenBank
+							</h4>
+							<h4 class="text-success" tal:condition="request/fileOptions/convertGenBankToSbol20">
+								<span class="glyphicon glyphicon-asterisk" />
+								Converting GenBank to SBOL 2.0
+							</h4>
+							<h4 class="text-success" tal:condition="request/fileOptions/componentDefinitionUri">
+								<span class="glyphicon glyphicon-asterisk" />
+								Converting ComponentDefinition with URI <span tal:content="request/fileOptions/componentDefinitionUri" /> to GenBank file
+							</h4>
+							<h4 class="text-success" tal:condition="request/conversionOptions/uriPrefix">
+								<span class="glyphicon glyphicon-asterisk" />
+								Using <span tal:content="request/conversionOptions/uriPrefix" /> as a URI prefix
+							</h4>
+							<h4 class="text-success" tal:condition="request/conversionOptions/version">
+								<span class="glyphicon glyphicon-asterisk" />
+								Using <span tal:content="request/conversionOptions/version" /> as version
+							</h4>
+							<h4 class="text-success" tal:condition="request/validationOptions/allowNonCompliantUri">
+								<span class="glyphicon glyphicon-asterisk" />
+								Allowing non-compliant URIs
+							</h4>
+							<h4 class="text-success" tal:condition="request/validationOptions/allowIncompleteDocument">
+								<span class="glyphicon glyphicon-asterisk" />
+								Allowing incomplete documents
+							</h4>
+							<h4 class="text-success" tal:condition="request/validationOptions/checkBestPractices">
+								<span class="glyphicon glyphicon-asterisk" />
+								Checking best practices
+							</h4>
+							<h4 class="text-success" tal:condition="request/validationOptions/failOnFirstError">
+								<span class="glyphicon glyphicon-asterisk" />
+								Failing on first error
+							</h4>
+							<h4 class="text-success" tal:condition="request/validationOptions/displayFullStackTrace">
+								<span class="glyphicon glyphicon-asterisk" />
+								Displaying full stack trace of first error
+							</h4>
+						</div>
+					<h3 class="text-center">Result</h3>
+					<p tal:content="structure request/result/output" />
+					<a tal:attributes="href request/outputFile" tal:condition="request/downloadCheck">Download Converted/Validated File</a>
+					<ul>
+					</ul>
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
