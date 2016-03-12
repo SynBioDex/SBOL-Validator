@@ -61,7 +61,7 @@
 							</label>
 							<input type="file" id="diffInputFile" name="diffInputFile"/>
 							<p class="help-block">
-								Upload an SBOL for comparison.
+								Upload an SBOL file for comparison.
 							</p>
 						</div>
 						<br />
@@ -84,10 +84,14 @@
 								<input type="checkbox" id="convertGenBankToSbol20" name="convertGenBankToSbol20"/> Convert GenBank to SBOL 2.0
 								</label>
 							</div>
+							<div class="checkbox">
+								<label>
+								<input type="checkbox" id="performFileDiff" name="performFileDiff"/> Perform file difference checking
+								</label>
+							</div>
 							<div class="form-group">
 								<label for="genBankComponentDefinition">
-								ComponentDefinition URI for conversion to GenBank
-								</label>
+								ComponentDefinition URI for conversion to GenBank</label>
 								<input type="text" class="form-control" id="genBankComponentDefinition" name="genBankComponentDefinition" placeholder="CD URI" />
 							</div>
 						</div>

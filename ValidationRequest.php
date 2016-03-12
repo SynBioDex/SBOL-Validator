@@ -28,7 +28,7 @@ class ValidationRequest {
 	function generateCommand() {
 		$command = "java -jar libSBOLj-2.0.1-SNAPSHOT-withDependencies.jar \"" . $this->sbolFile . "\" ";
 
-		if(isset($comparisonFile)) {
+		if($this->fileOptions->performFileDiff) {
 			$command = $command . "-e \"" . $this->comparisonFile . "\" ";
 		}
 
