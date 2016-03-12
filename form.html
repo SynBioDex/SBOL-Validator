@@ -17,14 +17,14 @@
 				<div class="col-md-2">
 				</div>
 				<div class="col-md-8">
-					<form class="form" action="validate.php" enctype="multipart/form-data" method="POST">
+					<form class="form" action="validate.php" onsubmit="return verifyForm()" enctype="multipart/form-data" method="POST">
 						<div class="tabbable" id="tabs-964765">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<a href="#upload" data-toggle="tab">Upload File</a>
+									<a href="#upload" data-toggle="tab" onclick="setUpload()">Upload File</a>
 								</li>
 								<li>
-									<a href="#paste" data-toggle="tab">Paste File</a>
+									<a href="#paste" data-toggle="tab" onclick="setPaste()">Paste File</a>
 								</li>
 							</ul>
 							<div class="tab-content">
@@ -42,6 +42,7 @@
 								</div>
 								<div class="tab-pane" id="paste">
 									<div class="form-group">
+										<input type="hidden" name="usePaste" id="usePaste" />
 										<label for="pasteInputFile">
 										SBOL/Genbank File
 										</label>
@@ -80,7 +81,7 @@
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="convertGenBankToSbol20" /> Convert GenBank to SBOL 2.0
+								<input type="checkbox" id="convertGenBankToSbol20" name="convertGenBankToSbol20"/> Convert GenBank to SBOL 2.0
 								</label>
 							</div>
 							<div class="form-group">
@@ -95,7 +96,7 @@
 						<i>Conversion Options</i>
 						</label>
 						<div class="form-group" id="conversionOptions">
-							<div class="form-group">
+							<div class="form-group" id="uriPrefixGroup">
 								<label for="uriPrefix">
 								URI prefix for converted objects
 								</label>
@@ -139,7 +140,7 @@
 								</label>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-default">Validate</button>
+						<button type="submit" class="btn btn-default" >Validate</button>
 					</form>
 				</div>
 				<div class="col-md-2">
