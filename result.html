@@ -67,9 +67,7 @@
 					<h3 class="text-center">Result</h3>
 					<p tal:content="structure request/result/output" />
 					<a tal:attributes="href request/outputFile" tal:condition="request/downloadCheck">Download Converted/Validated File</a>
-					<ul>
-						<button class="btn btn-primary" onclick="window.history.back()"> Back </button>	
-					</ul>
+					<button class="btn btn-primary" onclick="window.history.back()">Back</button>
 				</div>
 				<div class="col-md-2">
 				</div>
