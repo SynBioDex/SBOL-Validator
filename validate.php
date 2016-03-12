@@ -7,7 +7,7 @@ session_start();
 
 $request = new ValidationRequest();
 
-if($_POST["usePaste"] == "true" ) {
+if($_POST["usePaste"] != "true" ) {
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename($_FILES["primaryInputFile"]["name"]);
 	$uploadOk = 1;
@@ -78,8 +78,8 @@ $request->result->setOutput($request->executeValidation());
 $_SESSION["request"] = serialize($request);
 
 
-var_dump($_POST);
-var_dump($request);
+//var_dump($_POST);
+//var_dump($request);
 
 //echo $request->generateCommand();
 header("Location: result.php");
