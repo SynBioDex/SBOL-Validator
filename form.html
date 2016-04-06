@@ -5,8 +5,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>SBOL Validator</title>
-		<meta name="description" content="Source code generated using layoutit.com" />
-		<meta name="author" content="LayoutIt!" />
 		<link href="css/bootstrap.min.css" rel="stylesheet" />
 		<link href="css/style.css" rel="stylesheet" />
 	</head>
@@ -32,7 +30,7 @@
 								<div class="tab-pane active" id="upload">
 									<div class="form-group">
 										<label for="primaryInputFile">
-										SBOL/Genbank File
+										SBOL/Genbank File <img src="question.png" width="10px" title="The main file for validation" />
 										</label>
 										<input type="file" id="primaryInputFile" name="primaryInputFile" />
 										<p class="help-block">
@@ -57,7 +55,7 @@
 						<hr />
 						<div class="form-group">
 							<label for="diffInputFile">
-							Comparison file
+							Comparison file <img src="question.png" width="10px" title="The file used for comparison -- must be SBOL" />
 							</label>
 							<input type="file" id="diffInputFile" name="diffInputFile"/>
 							<p class="help-block">
@@ -71,27 +69,27 @@
 						<div class="form-group" id="fileOptions">
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="convertSbol11To20"/> Convert SBOL 1.1 to 2.0
+								<input type="checkbox" name="convertSbol11To20"/> Convert SBOL 1.1 to 2.0 <img src="question.png" width="10px" title="Returns an SBOL 2.0 file" />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="convertSbol20ToGenBank" /> Convert SBOL 2.0 to GenBank 
+								<input type="checkbox" name="convertSbol20ToGenBank" /> Convert SBOL 2.0 to GenBank <img src="question.png" width="10px" title="Returns a GenBank file" />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" id="convertGenBankToSbol20" name="convertGenBankToSbol20"/> Convert GenBank to SBOL 2.0
+								<input type="checkbox" id="convertGenBankToSbol20" name="convertGenBankToSbol20"/> Convert GenBank to SBOL 2.0 <img src="question.png" width="10px" title="Returns an SBOL 2.0 file" />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" id="performFileDiff" name="performFileDiff"/> Perform file difference checking
+								<input type="checkbox" id="performFileDiff" name="performFileDiff"/> Perform file difference checking <img src="question.png" width="10px" title="Performs a content-diff on the files" />
 								</label>
 							</div>
 							<div class="form-group">
 								<label for="genBankComponentDefinition">
-								ComponentDefinition URI for conversion to GenBank</label>
+								ComponentDefinition URI for conversion to GenBank <img src="question.png" width="10px" title="Required for conversion to GenBank" /></label>
 								<input type="text" class="form-control" id="genBankComponentDefinition" name="genBankComponentDefinition" placeholder="CD URI" />
 							</div>
 						</div>
@@ -102,13 +100,13 @@
 						<div class="form-group" id="conversionOptions">
 							<div class="form-group" id="uriPrefixGroup">
 								<label for="uriPrefix">
-								URI prefix for converted objects
+								URI prefix for converted objects <img src="question.png" width="10px" title="Required for conversion from 1.1 and GenBank" />
 								</label>
 								<input type="text" class="form-control" id="uriPrefix" name="uriPrefix" placeholder="URI Prefix" />
 							</div>
 							<div class="form-group">
 								<label for="version">
-								Version for converted objects
+								Version for converted objects <img src="question.png" width="10px" title="Encouraged for conversion from 1.1" />
 								</label>
 								<input type="text" class="form-control" id="version" name="version" placeholder="Version" />
 							</div>
@@ -120,7 +118,7 @@
 						<div class="form-group" id="vallidationOptionsOptions">
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="allowNonCompliantUris" /> Allow non-compliant URIs
+								<input type="checkbox" name="allowNonCompliantUris" /> Allow non-compliant URIs 
 								</label>
 							</div>
 							<div class="checkbox">
