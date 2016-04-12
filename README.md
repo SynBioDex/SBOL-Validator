@@ -40,5 +40,33 @@ Below is an example of a valid JSON top-level `validationOptions` object. All va
 
 The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances.
 
+##### Example
+
+```python
+import requests
+import base64
+
+request = {"validationOptions": {"sbol11To20": False,
+                                 "sbol20ToGenBank": True,
+                                 "genBankToSbol20": False,
+                                 "diff": False,
+                                 "noncompliantUrisAllowed": False,
+                                 "incompleteDocumentsAllowed": False,
+                                 "bestPracticesCheck": False,
+                                 "failOnFirstError": False,
+                                 "displayFullErrorStackTrace": False,
+                                 "ComponentDefinitionUri": "",
+                                 "uriPrefix": "",
+                                 "version": "",
+                                 },
+           "wantFileBack" : False}
+
+request["mainFile"] = base64.b64encode(bytes(open("sequence1.xml").read(), "UTF-8")).decode("UTF-8")
+
+
+resp = requests.post("http://www.async.ece.utah.edu/sbol-validator/endpoint.php", json=request)
+```
+This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
+
 ### Browser Usage
 To connect to the browser application, simply open a browser and navigate to the root directory. Upload a file for validation and select the desired options.
