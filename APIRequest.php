@@ -42,7 +42,7 @@ class APIRequest extends ValidationRequest {
         }
 
         if(!$this->wantFileBack) {
-            $this->outputFile = uniqid();
+            $this->outputFile = "uploads/" . uniqid();
         }
     }
 

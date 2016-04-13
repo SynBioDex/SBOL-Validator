@@ -89,7 +89,7 @@
 							</div>
 							<div class="form-group">
 								<label for="genBankComponentDefinition">
-								ComponentDefinition URI for conversion to GenBank <img src="question.png" width="10px" title="Required for conversion to GenBank" /></label>
+								ComponentDefinition URI for conversion to GenBank <img src="question.png" width="10px" title="Selects a specific ComponentDefinition for conversion to GenBank" /></label>
 								<input type="text" class="form-control" id="genBankComponentDefinition" name="genBankComponentDefinition" placeholder="CD URI" />
 							</div>
 						</div>
@@ -118,27 +118,27 @@
 						<div class="form-group" id="vallidationOptionsOptions">
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="allowNonCompliantUris" /> Allow non-compliant URIs 
+								<input type="checkbox" name="allowNonCompliantUris" /> Allow non-compliant URIs <img src="question.png" width="10px" title="Allow URIs which do not match URI compliance specifications" />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="allowIncompleteDocuments" /> Allow incomplete documents
+								<input type="checkbox" name="allowIncompleteDocuments" /> Allow incomplete documents <img src="question.png" width="10px" title="Allow references to component definitions not contained within the document." />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="checkBestPractices" /> Check best practices
+								<input type="checkbox" name="checkBestPractices" /> Check best practices <img src="question.png" width="10px" title="Perform checks against the best practices for SBOL documents." />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="failOnFirstError" /> Fail on first error
+								<input type="checkbox" name="failOnFirstError" /> Fail on first error <img src="question.png" width="10px" title="Stop validation on first error encountered, as opposed to listing all errors found in document validation" />
 								</label>
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="displayFullStackTrace" /> Display full stack trace
+								<input type="checkbox" name="displayFullStackTrace" /> Display full stack trace <img src="question.png" width="10px" title="Display the full stack trace of the first error encountered" />
 								</label>
 							</div>
 						</div>
