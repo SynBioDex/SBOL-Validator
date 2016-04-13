@@ -57,7 +57,7 @@ if(isset($_FILES["diffInputFile"])) {
 }
 
 $request->fileOptions->fill(isset($_POST["convertSbol11To20"]), isset($_POST["convertSbol20ToGenBank"]), 
-							isset($_POST["convertGenBankToSbol20"]), $_POST["genBankComponentDefinition"], isset($_POST["performFileDiff"]));
+							isset($_POST["convertGenBankToSbol20"]), $_POST["genBankComponentDefinition"], isset($_POST["convertSbol20to11"), isset($_POST["performFileDiff"]));
 
 $request->conversionOptions->fill($_POST["uriPrefix"], $_POST["version"]);
 

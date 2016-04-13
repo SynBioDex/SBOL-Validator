@@ -5,6 +5,7 @@ class FileOptions {
 	var $convertSbol20ToGenBank;
 	var $convertGenBankToSbol20;
 	var $componentDefinitionUri;
+	var $convertSbol2
 	var $performFileDiff;
 
 	function __construct() {
@@ -16,10 +17,11 @@ class FileOptions {
 	}
 
 	function fill($convertSbol11To20, $convertSbol20ToGenBank, 
-					$convertGenBankToSbol20, $componentDefinitionUri, $performFileDiff) {
+					$convertGenBankToSbol20, $componentDefinitionUri, $convertSbol20to11, $performFileDiff) {
 		$this->convertSbol11To20 = $convertSbol11To20;
 		$this->convertSbol20ToGenBank = $convertSbol20ToGenBank;
 		$this->convertGenBankToSbol20 = $convertGenBankToSbol20;
+		$this->convertSbol20to11 = $convertSbol20to11;
 		$this->performFileDiff = $performFileDiff;
 
 		if($componentDefinitionUri != "") {
@@ -34,10 +36,14 @@ class FileOptions {
 			$fragment = $fragment . "-g ";
 		}
 
+		if($this->convertSbol20to11) {
+			$fragment = $fragment . "-l SBOL1 ";
+		}
+
 		if($this->componentDefinitionUri && $this->convertSbol20ToGenBank) {
 			$fragment = $fragment . "-c " . $this->componentDefinitionUri . " ";
 		} else if(!$this->componentDefinitionUri && $this->convertSbol20ToGenBank) {
-			$fragment = $fragment . "-r ";
+			$fragment = $fragment . "-l GenBank ";
 		}
 
 		return $fragment;
