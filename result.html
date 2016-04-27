@@ -19,21 +19,13 @@
 					<h1 class="text-center">SBOL Validator/Converter</h1>
 					<h3 class="text-center">Validation Summary</h3>
 						<div align="center">
-							<h4 class="text-success" tal:condition="request/fileOptions/convertSbol11To20">
+							<h4 class="text-success">
 								<span class="glyphicon glyphicon-asterisk" />
-								Converting SBOL 1.1 to 2.0
-							</h4>
-							<h4 class="text-success" tal:condition="request/fileOptions/convertSbol20ToGenBank">
+								Outputing <span tal:content="request/fileOptions/output" />
+							</h4>	
+							<h4 class="text-success" tal:condition="request/fileOptions/topLevelToConvert">
 								<span class="glyphicon glyphicon-asterisk" />
-								Converting SBOL 2.0 to GenBank
-							</h4>
-							<h4 class="text-success" tal:condition="request/fileOptions/convertGenBankToSbol20">
-								<span class="glyphicon glyphicon-asterisk" />
-								Converting GenBank to SBOL 2.0
-							</h4>
-							<h4 class="text-success" tal:condition="request/fileOptions/componentDefinitionUri">
-								<span class="glyphicon glyphicon-asterisk" />
-								Converting ComponentDefinition with URI <span tal:content="request/fileOptions/componentDefinitionUri" /> to GenBank file
+								Converting TopLevel <span tal:content="request/fileOptions/topLevelToConvert" /> 
 							</h4>
 							<h4 class="text-success" tal:condition="request/conversionOptions/uriPrefix">
 								<span class="glyphicon glyphicon-asterisk" />

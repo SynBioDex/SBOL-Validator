@@ -56,8 +56,7 @@ if(isset($_FILES["diffInputFile"])) {
 	$request->comparisonFile = $target_file;
 }
 
-$request->fileOptions->fill(isset($_POST["convertSbol11To20"]), isset($_POST["convertSbol20ToGenBank"]), 
-							isset($_POST["convertGenBankToSbol20"]), $_POST["genBankComponentDefinition"], isset($_POST["convertSbol20to11"), isset($_POST["performFileDiff"]));
+$request->fileOptions->fill($_POST["output"],  $_POST["topLevelToConvert"], isset($_POST["performFileDiff"]));
 
 $request->conversionOptions->fill($_POST["uriPrefix"], $_POST["version"]);
 
@@ -65,9 +64,12 @@ $request->validationOptions->fill(isset($_POST["allowNonCompliantUris"]), isset(
 									isset($_POST["checkBestPractices"]), isset($_POST["failOnFirstError"]),
 									isset($_POST["displayFullStackTrace"]));
 
-if($request->fileOptions->convertSbol20ToGenBank) {
+if($request->fileOptions->output == "GenBank") {
 	$pathparts = pathinfo($request->sbolFile);
 	$request->outputFile = $pathparts["dirname"] . "/" . $pathparts["filename"] . "-output.gb";
+} else if($request->fileOptions->output == "FASTA") {
+	$pathparts = pathinfo($request->sbolFile);
+	$request->outputFile = $pathparts["dirname"] . "/" . $pathparts["filename"] . "-output.fas";
 } else {
 	$pathparts = pathinfo($request->sbolFile);
 	$request->outputFile = $pathparts["dirname"] . "/" . $pathparts["filename"] . "-output.xml";

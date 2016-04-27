@@ -47,7 +47,7 @@ class ValidationRequest {
 	}
 
 	function downloadCheck() {
-		return $this->fileOptions->downloadCheck() && $this->result->successful;
+		return true;
 	}
 
 }

@@ -67,24 +67,24 @@
 						<i>File Options</i>
 						</label>
 						<div class="form-group" id="fileOptions">
-							<div class="checkbox">
+							<div class="radio">
 								<label>
-								<input type="checkbox" name="convertSbol11To20"/> Convert SBOL 1.1 to 2.0 <img src="question.png" width="10px" title="Returns an SBOL 2.0 file" />
+									<input type="radio" name="output" value="SBOL2" id="sbol20" checked="checked" /> Output SBOL 2.0 <br />
 								</label>
 							</div>
-							<div class="checkbox">
+							<div class="radio">
 								<label>
-								<input type="checkbox" name="convertSbol20ToGenBank" /> Convert SBOL 2.0 to GenBank <img src="question.png" width="10px" title="Returns a GenBank file" />
+									<input type="radio" name="output" value="SBOL1" id="sbol11" /> Output SBOL 1.1 <br />
 								</label>
 							</div>
-							<div class="checkbox">
+							<div class="radio">
 								<label>
-								<input type="checkbox" id="convertGenBankToSbol20" name="convertGenBankToSbol20"/> Convert GenBank to SBOL 2.0 <img src="question.png" width="10px" title="Returns an SBOL 2.0 file" />
+									<input type="radio" name="output" value="GenBank" id="genbank" /> Output GenBank <br />
 								</label>
 							</div>
-							<div class="checkbox">
+							<div class="radio">
 								<label>
-									<input type="checkbox" id="convertSbol20to11" name="convertSbol20to11" /> Convert SBOL 2.0 to 1.1 <img src="question.png" width="10px" title="Returns an SBOL 1.1 file" />
+									<input type="radio" name="output" value="FASTA" id="fasta" /> Output FASTA <br />
 								</label>
 							</div>
 							<div class="checkbox">
@@ -93,9 +93,9 @@
 								</label>
 							</div>
 							<div class="form-group">
-								<label for="genBankComponentDefinition">
-								ComponentDefinition URI for conversion to GenBank <img src="question.png" width="10px" title="Selects a specific ComponentDefinition for conversion to GenBank" /></label>
-								<input type="text" class="form-control" id="genBankComponentDefinition" name="genBankComponentDefinition" placeholder="CD URI" />
+								<label for="topLevelToConvert">
+								TopLevel to convert and validate <img src="question.png" width="10px" title="Selects a specific TopLevel for conversion to GenBank" /></label>
+								<input type="text" class="form-control" id="topLevelToConvert" name="topLevelToConvert" placeholder="TL URI" />
 							</div>
 						</div>
 						<br />
