@@ -8,18 +8,15 @@ class APIRequest extends ValidationRequest {
     function __construct($json) {
         parent::__construct();
         $this->metadata = $json["validationOptions"];
-        $this->mainFile = $this->decodeJSONEnclosedFile($json["mainFile"]);
+        $this->mainFile = $json["mainFile"];
         $this->wantFileBack = $json["wantFileBack"];
         if($this->metadata["diff"]) {
-            $this->diffFile = $this->decodeJSONEnclosedFile($json["diffFile"]);
+            $this->diffFile = $json["diffFile"];
         }
 
         $this->process();
     }
 
-    function decodeJSONEnclosedFile($file) {
-        return base64_decode($file);
-    }
 
     function process() {
         $this->fileOptions->convertSbol11To20 = $this->metadata["sbol11To20"];
@@ -49,7 +46,6 @@ class APIRequest extends ValidationRequest {
     function doUpload($file) {
         $target_dir = "uploads/";
         $target_file = $target_dir . uniqid() . ".upload";
-        $uploadOk = 1;
         $addition = 1;
 
         while (file_exists($target_file)) {
