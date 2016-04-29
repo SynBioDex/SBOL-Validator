@@ -37,16 +37,8 @@ function checkIncorrect($json)
         err("wantFileBack");
     }
 
-    if(!isset($json["validationOptions"]["sbol11To20"])) {
-        err("sbol11To20");
-    }
-
-    if(!isset($json["validationOptions"]["sbol20ToGenBank"])) {
-        err("sbol20ToGenBank");
-    }
-
-    if(!isset($json["validationOptions"]["genBankToSbol20"])) {
-        err("genBankToSbol20");
+    if(!isset($json["validationOptions"]["output"])) {
+        err("output");
     }
 
     if(!isset($json["validationOptions"]["diff"])) {
@@ -73,8 +65,8 @@ function checkIncorrect($json)
         err("displayFullErrorStackTrace");
     }
 
-    if(!isset($json["validationOptions"]["ComponentDefinitionUri"])) {
-        err("ComponentDefinitionUri");
+    if(!isset($json["validationOptions"]["topLevelToConvert"])) {
+        err("topLevelToConvert");
     }
 
     if(!isset($json["validationOptions"]["uriPrefix"])) {

@@ -19,9 +19,7 @@ class APIRequest extends ValidationRequest {
 
 
     function process() {
-        $this->fileOptions->convertSbol11To20 = $this->metadata["sbol11To20"];
-        $this->fileOptions->convertSbol20ToGenBank = $this->metadata["sbol20ToGenBank"];
-        $this->fileOptions->convertGenBankToSbol20 = $this->metadata["genBankToSbol20"];
+        $this->fileOptions->output = $this->metadata["output"];
         $this->fileOptions->performFileDiff = $this->metadata["diff"];
         $this->validationOptions->allowNonCompliantUri = $this->metadata["noncompliantUrisAllowed"];
         $this->validationOptions->allowIncompleteDocument = $this->metadata["incompleteDocumentsAllowed"];
@@ -29,7 +27,7 @@ class APIRequest extends ValidationRequest {
         $this->validationOptions->failOnFirstError = $this->metadata["failOnFirstError"];
         $this->validationOptions->displayFullStackTrace = $this->metadata["displayFullErrorStackTrace"];
 
-        $this->fileOptions->componentDefinitionUri = $this->metadata["ComponentDefinitionUri"];
+        $this->fileOptions->topLevelToConvert = $this->metadata["topLevelToConvert"];
         $this->conversionOptions->uriPrefix = $this->metadata["uriPrefix"];
         $this->conversionOptions->version = $this->metadata["version"];
 
