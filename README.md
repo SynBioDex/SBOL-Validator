@@ -23,48 +23,40 @@ The API accepts a JSON object containing between three and four top-level member
 ###### Validation Options
 Below is an example of a valid JSON top-level `validationOptions` object. All values are required.
 ````
-"validationOptions" : {"sbol11To20": false,
-                       "sbol20ToGenBank": true,
-                       "genBankToSbol20": false,
+"validationOptions" : {"output": "SBOL1",
                        "diff": false,
                        "noncompliantUrisAllowed": false,
                        "incompleteDocumentsAllowed": false,
                        "bestPracticesCheck": false,
                        "failOnFirstError": false,
                        "displayFullErrorStackTrace": false,
-                       "ComponentDefinitionUri": "",
+                       "topLevelToConvert": "",
                        "uriPrefix": "",
                        "version": "",
                        }
 ````
 
-The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances.
+The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances. The `output` flag has the following options: `SBOL1`, `SBOL2`, `GenBank`, `FASTA`. Please note that all fields and values are case-sensitive.
 
 ##### Example
-
 ```python
 import requests
-import base64
 
-request = {"validationOptions": {"sbol11To20": False,
-                                 "sbol20ToGenBank": True,
-                                 "genBankToSbol20": False,
+request = {"validationOptions": {"output" : "FASTA",
                                  "diff": False,
                                  "noncompliantUrisAllowed": False,
                                  "incompleteDocumentsAllowed": False,
                                  "bestPracticesCheck": False,
                                  "failOnFirstError": False,
                                  "displayFullErrorStackTrace": False,
-                                 "ComponentDefinitionUri": "",
+                                 "topLevelToConvert": "",
                                  "uriPrefix": "",
                                  "version": "",
                                  },
-           "wantFileBack" : False}
+           "wantFileBack": True,
+           "mainFile": open("sequence1.xml").read()}
 
-request["mainFile"] = base64.b64encode(bytes(open("sequence1.xml").read(), "UTF-8")).decode("UTF-8")
-
-
-resp = requests.post("http://www.async.ece.utah.edu/sbol-validator/endpoint.php", json=request)
+resp = requests.post("http://localhost/sbol-validator/endpoint.php", json=request)
 ```
 This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
 
