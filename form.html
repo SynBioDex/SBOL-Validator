@@ -30,11 +30,11 @@
 								<div class="tab-pane active" id="upload">
 									<div class="form-group">
 										<label for="primaryInputFile">
-										SBOL/Genbank File <img src="question.png" width="10px" title="The main file for validation" />
+										SBOL/GenBank/FASTA File <img src="question.png" width="10px" title="The main file for validation/conversion" />
 										</label>
 										<input type="file" id="primaryInputFile" name="primaryInputFile" />
 										<p class="help-block">
-											Upload an SBOL or GenBank file for validation/conversion.
+											Upload an SBOL, GenBank, or FASTA file for validation/conversion.
 										</p>
 									</div>
 								</div>
@@ -42,11 +42,11 @@
 									<div class="form-group">
 										<input type="hidden" name="usePaste" id="usePaste" />
 										<label for="pasteInputFile">
-										SBOL/Genbank File
+										SBOL/GenBank/FASTA File
 										</label>
 										<textarea class="form-control" rows="10" name="pasteInputFile"></textarea>
 										<p class="help-block">
-											Paste an SBOL or GenBank file for validation/conversion.
+											Paste an SBOL, GenBank, or FASTA file for validation/conversion.
 										</p>
 									</div>
 								</div>
@@ -94,7 +94,7 @@
 							</div>
 							<div class="form-group">
 								<label for="topLevelToConvert">
-								TopLevel to convert and validate <img src="question.png" width="10px" title="Selects a specific TopLevel for conversion to GenBank" /></label>
+								TopLevel to convert and validate <img src="question.png" width="10px" title="Selects a specific TopLevel (and referenced objects) for validation/conversion" /></label>
 								<input type="text" class="form-control" id="topLevelToConvert" name="topLevelToConvert" placeholder="TL URI" />
 							</div>
 						</div>
@@ -105,13 +105,13 @@
 						<div class="form-group" id="conversionOptions">
 							<div class="form-group" id="uriPrefixGroup">
 								<label for="uriPrefix">
-								URI prefix for converted objects <img src="question.png" width="10px" title="Required for conversion from 1.1 and GenBank" />
+								URI prefix for converted objects <img src="question.png" width="10px" title="Required for conversion from SBOL 1.1, GenBank, and FASTA" />
 								</label>
 								<input type="text" class="form-control" id="uriPrefix" name="uriPrefix" placeholder="URI Prefix" />
 							</div>
 							<div class="form-group">
 								<label for="version">
-								Version for converted objects <img src="question.png" width="10px" title="Encouraged for conversion from 1.1" />
+								Version for converted objects <img src="question.png" width="10px" title="Optional for conversion from SBOL 1.1, GenBank, and FASTA" />
 								</label>
 								<input type="text" class="form-control" id="version" name="version" placeholder="Version" />
 							</div>
@@ -128,7 +128,7 @@
 							</div>
 							<div class="checkbox">
 								<label>
-								<input type="checkbox" name="allowIncompleteDocuments" /> Allow incomplete documents <img src="question.png" width="10px" title="Allow references to component definitions not contained within the document." />
+								<input type="checkbox" name="allowIncompleteDocuments" /> Allow incomplete documents <img src="question.png" width="10px" title="Allow references to TopLevel objects not contained within the document." />
 								</label>
 							</div>
 							<div class="checkbox">
