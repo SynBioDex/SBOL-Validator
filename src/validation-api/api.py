@@ -9,6 +9,10 @@ class ValidationAPI(Resource):
     def post(self):
         pass
 
+class UpdateAPI(Resource):
+    def post(self):
+        pass
+
 api.add_resource(ValidationAPI, '/validate')
 
 if __name__ == '__main__':

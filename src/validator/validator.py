@@ -34,10 +34,10 @@ class ValidationRun:
         self.validation_file = validation_file
         self.diff_file = diff_file
 
-    def execute(self, jar_path):
+    def execute(self):
         result = ValidationResult(self.options.output_file)
         try:
-            command = self.options.command(jar_path, self.validation_file, self.diff_file)
+            command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
         except ValueError:
             result.broken_validation_request()
 
