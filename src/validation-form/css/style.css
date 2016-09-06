@@ -1,1 +1,13 @@
-# Empty CSS file for your own CSS
+.col-md-3 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.col-md-4 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#submit {
+    float: right;
+}
