@@ -59,11 +59,21 @@
 									<div class=form-group>
 										<input type=hidden name=usePaste id=usePaste>
 										<label for=pasteInputFile>
-										SBOL/GenBank/FASTA File
+										Main SBOL/GenBank/FASTA File
 										</label>
-										<textarea class=form-control rows=10 name=pasteInputFile></textarea>
+										<textarea class=form-control rows=10 id=pastedPrimaryInputFile name=pastedPrimayInputFile></textarea>
 										<p class=help-block>
 											Paste an SBOL, GenBank, or FASTA file for validation/conversion.
+										</p>
+									</div>
+									<div class=form-group>
+										<input type=hidden name=usePaste id=usePaste>
+										<label for=pasteInputFile>
+										Comparison file
+										</label>
+										<textarea class=form-control rows=10 id=pastedDiffInputFile name=pastedDiffInputFile></textarea>
+										<p class=help-block>
+											Paste an SBOL for comparison.
 										</p>
 									</div>
 								</div>

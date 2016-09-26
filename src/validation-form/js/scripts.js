@@ -12,12 +12,36 @@
 	return true;
 } */
 
+function clearPaste(id) {
+	var fileInput = document.getElementById(id);
+	fileInput.value = "";
+}
+
+function clearFileInput(id) 
+{ 
+    var oldInput = document.getElementById(id); 
+
+    var newInput = document.createElement("input"); 
+
+    newInput.type = "file"; 
+    newInput.id = oldInput.id; 
+    newInput.name = oldInput.name; 
+    newInput.className = oldInput.className; 
+    newInput.style.cssText = oldInput.style.cssText; 
+
+    oldInput.parentNode.replaceChild(newInput, oldInput); 
+}
+
 function setUpload() {
 	document.getElementById("usePaste").value = "false";
+	clearPaste("pastedPrimaryInputFile");
+	clearPaste("pastedDiffInputFile");
 }
 
 function setPaste() {
 	document.getElementById("usePaste").value = "true";
+	clearFileInput("primaryInputFile");
+	clearFileInput("diffInputFile");
 }
 
 function verifyForm() {
