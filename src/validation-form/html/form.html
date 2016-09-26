@@ -15,7 +15,7 @@
 				<div class=col-md-2>
 				</div>
 				<div class=col-md-8>
-					<form class=form action=validate.php onsubmit="return verifyForm()" enctype=multipart/form-data method=POST>
+					<form class=form onsubmit="return false">
 						<div class=tabbable id=tabs-964765>
 							<ul class="nav nav-tabs">
 								<li class=active>
@@ -36,7 +36,7 @@
 												SBOL/GenBank/FASTA File <img src=../img/question.png width=10px title="The main file for validation/conversion">
 												</label>
 												<input type=file id=primaryInputFile name=primaryInputFile size=10>
-												<p class=help-block>
+												<p class=help-block id=primaryFileHelp>
 													Upload an SBOL, GenBank, or FASTA file for validation/conversion.
 												</p>
 											</div>
@@ -48,7 +48,7 @@
 												Comparison file <img src=../img/question.png width=10px title="The file used for comparison -- must be SBOL">
 												</label>
 												<input type=file id=diffInputFile name=diffInputFile>
-												<p class=help-block>
+												<p class=help-block id=diffFileHelp>
 													Upload an SBOL file for comparison.
 												</p>
 											</div>
@@ -57,22 +57,21 @@
 								</div>
 								<div class=tab-pane id=paste>
 									<div class=form-group>
-										<input type=hidden name=usePaste id=usePaste>
+										<input type=hidden name=usePaste id=usePaste value=false>
 										<label for=pasteInputFile>
 										Main SBOL/GenBank/FASTA File
 										</label>
 										<textarea class=form-control rows=10 id=pastedPrimaryInputFile name=pastedPrimayInputFile></textarea>
-										<p class=help-block>
+										<p class=help-block id=primaryPasteHelp>
 											Paste an SBOL, GenBank, or FASTA file for validation/conversion.
 										</p>
 									</div>
 									<div class=form-group>
-										<input type=hidden name=usePaste id=usePaste>
 										<label for=pasteInputFile>
 										Comparison file
 										</label>
 										<textarea class=form-control rows=10 id=pastedDiffInputFile name=pastedDiffInputFile></textarea>
-										<p class=help-block>
+										<p class=help-block id=diffPasteHelp>
 											Paste an SBOL for comparison.
 										</p>
 									</div>
@@ -152,27 +151,27 @@
 									<div class=form-group id=vallidationOptionsOptions>
 										<div class=checkbox>
 											<label>
-											<input type=checkbox name=allowNonCompliantUris> Allow non-compliant URIs <img src=../img/question.png width=10px title="Allow URIs which do not match URI compliance specifications">
+											<input type=checkbox name=allowNonCompliantUris id=allowNonCompliantUris> Allow non-compliant URIs <img src=../img/question.png width=10px title="Allow URIs which do not match URI compliance specifications">
 											</label>
 										</div>
 										<div class=checkbox>
 											<label>
-											<input type=checkbox name=allowIncompleteDocuments> Allow incomplete documents <img src=../img/question.png width=10px title="Allow references to TopLevel objects not contained within the document.">
+											<input type=checkbox name=allowIncompleteDocuments id=allowIncompleteDocuments> Allow incomplete documents <img src=../img/question.png width=10px title="Allow references to TopLevel objects not contained within the document.">
 											</label>
 										</div>
 										<div class=checkbox>
 											<label>
-											<input type=checkbox name=checkBestPractices> Check best practices <img src=../img/question.png width=10px title="Perform checks against the best practices for SBOL documents.">
+											<input type=checkbox name=checkBestPractices id=checkBestPractices> Check best practices <img src=../img/question.png width=10px title="Perform checks against the best practices for SBOL documents.">
 											</label>
 										</div>
 										<div class=checkbox>
 											<label>
-											<input type=checkbox name=failOnFirstError> Fail on first error <img src=../img/question.png width=10px title="Stop validation on first error encountered, as opposed to listing all errors found in document validation">
+											<input type=checkbox name=failOnFirstError id=failOnFirstError onchange="handleFailOnFirst()"> Fail on first error <img src=../img/question.png width=10px title="Stop validation on first error encountered, as opposed to listing all errors found in document validation">
 											</label>
 										</div>
 										<div class=checkbox>
 											<label>
-											<input type=checkbox name=displayFullStackTrace> Display full stack trace <img src=../img/question.png width=10px title="Display the full stack trace of the first error encountered">
+											<input type=checkbox name=displayFullStackTrace id=displayFullStackTrace> Display full stack trace <img src=../img/question.png width=10px title="Display the full stack trace of the first error encountered">
 											</label>
 										</div>
 									</div>
@@ -180,7 +179,7 @@
 							</div>
 						</div>
 						<div class="row" id="submit">
-							<button type=submit class="btn btn-primary">Validate</button>
+							<button onclick="submitValidationRequest()" class="btn btn-primary" type=submit>Validate</button>
 						</div>
 						</form>
 					</div>
