@@ -210,9 +210,8 @@ function getOutputLanguage() {
 }
 
 function displayValidationResult(data, textStatus, jqXHR) {
-	console.log(data);
-	console.log(textStatus);
-	console.log(jqXHR);
+	window.location = "result.html"
+	
 }
 
 function submitValidationRequest() {
