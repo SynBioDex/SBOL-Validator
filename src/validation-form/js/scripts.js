@@ -3,12 +3,12 @@ var diffFileInput = new FileReader();
 
 function mainFileChanged() {
 	console.log("Main file change recorded");
-	mainFileInput.readAsText(document.getElementById('primaryInputFile').files[0]);
+	mainFileInput.readAsText(document.getElementById('primaryInputFile').files[0], 'utf-8');
 }
 
 function diffFileChanged() {
 	console.log("Diff file change rcorded");
-	diffFileInput.readAsText(document.getElementById('diffInputFile').files[0]);
+	diffFileInput.readAsText(document.getElementById('diffInputFile').files[0], 'utf-8');
 }
 
 function clearPaste(id) {

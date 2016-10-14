@@ -1,6 +1,7 @@
 from flask import Flask, request, json
 from flask_cors import CORS
-from validator.validator import ValidationOptions, ValidationResult, ValidationRun
+from util import do_validation
+
 
 app = Flask(__name__)
 CORS(app)
@@ -9,12 +10,33 @@ CORS(app)
 def validate():
     validation_json = request.get_json()
     if validation_json is None:
-        print("Error")
+        raise InvalidUsage("Request content type must be application/json")
     else:
-        print(validation_json)
+        response = json.jsonify(do_validation(validation_json))
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
-    response = json.jsonify({'hey': 'yeah'})
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    
+
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
+
+@app.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
     return response
 
 if __name__ == '__main__':
