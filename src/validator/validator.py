@@ -8,19 +8,21 @@ import sys, os
 
 
 class ValidationResult:
-    def __init__(self, output_file):
+    def __init__(self, output_file, equality):
+        self.equality = equality
         self.output_file = output_file
         self.valid = False
         self.errors = []
 
     def digest_errors(self, output):
-        self.errors = output.split('\nValidation failed.')[0].split('\n')
+        self.errors = filter(None, output.strip(u'Validation failed.').split('\n'))
 
     def decipher(self, output):
-        if "Validation failed." in output:
+        if "Validation successful, no errors." not in output:
             self.valid = False
             self.digest_errors(output)
         else:
+            self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
 
     def broken_validation_request(self):
@@ -37,7 +39,7 @@ class ValidationRun:
         self.diff_file = diff_file
 
     def execute(self):
-        result = ValidationResult(self.options.output_file)
+        result = ValidationResult(self.options.output_file, self.options.test_equality)
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
         except ValueError:
@@ -45,11 +47,10 @@ class ValidationRun:
 
         # Attempt to run command
         try:
-            print(command)
             output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
-            result.valid = False;
+            result.valid = False
             result.errors += [e.output, ]    
 
         result.decipher(output.decode(sys.stdout.encoding))

@@ -3,7 +3,6 @@ import uuid
 import os
 
 
-
 def do_validation(json):
     options = ValidationOptions()
     options.build(json['options'])

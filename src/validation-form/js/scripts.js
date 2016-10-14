@@ -2,13 +2,12 @@ var mainFileInput = new FileReader();
 var diffFileInput = new FileReader();
 
 function mainFileChanged() {
-	console.log("Main file change recorded");
 	mainFileInput.readAsText(document.getElementById('primaryInputFile').files[0], 'utf-8');
 }
 
 function diffFileChanged() {
-	console.log("Diff file change rcorded");
 	diffFileInput.readAsText(document.getElementById('diffInputFile').files[0], 'utf-8');
+	document.getElementById("performFileDiff").checked = true;
 }
 
 function clearPaste(id) {
@@ -138,7 +137,7 @@ function buildRequest() {
 		fullRequest = {
 			"options": options,
 			"main_file": mainFile,
-			"diff_file": diff_file
+			"diff_file": diffFile
 		};
 	} else {
 		fullRequest = {
@@ -146,8 +145,6 @@ function buildRequest() {
 			"main_file": mainFile,
 		};
 	}
-
-	console.log(fullRequest);
 
 	return fullRequest;
 }
@@ -209,20 +206,66 @@ function getOutputLanguage() {
 	}
 }
 
+function parseData(data) {
+	var toReturn = [];
+	console.log(data);
+	if(data["valid"]) {
+		toReturn.push("Validation successful.");
+		if(!data["equality"]) {
+			if(data["errors"].length > 0) {
+				toReturn.push("Conversion failed.");
+				toReturn = toReturn.concat(data["errors"]);
+			} else {
+				toReturn.push("Conversion successful.");
+				toReturn.push("<a href='../../" + data["output_file"] + "'>Validated and converted file</a>");
+			}
+		} else {
+			if(data["errors"].length > 0) {
+				toReturn.push("Differences:");
+				toReturn = toReturn.concat(data["errors"]);
+			} else {
+				toReturn.push("No differences");
+			}
+		}
+	} else {
+		console.log(data["errors"]);
+		toReturn.push("Validation failed.");
+		toReturn = toReturn.concat(data["errors"]);
+	}
+
+	return toReturn;
+}
+
 function displayValidationResult(data, textStatus, jqXHR) {
-	window.location = "result.html"
-	
+	var interpreted = parseData(data);
+	console.log(interpreted);
+	document.getElementById("result").innerHTML = interpreted.join("<br>");
+	document.getElementById("myModal").style.display = "block";
+}
+
+function apiError(data, textStatus, jqXHR) {
+	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 
 function submitValidationRequest() {
 	if(verifyForm()) {
-		console.log(JSON.stringify(buildRequest()));
-
 		$.ajax({
 			url: 'http://localhost:5000/validate',
 			data: JSON.stringify(buildRequest()), 
-			success: displayValidationResult, 
+			success: displayValidationResult,
+			error: apiError,  
 			type: 'POST',
 			contentType: 'application/json'})
 	}
+}
+
+function closeModal() {
+	document.getElementById("myModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+	modal = document.getElementById("myModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
