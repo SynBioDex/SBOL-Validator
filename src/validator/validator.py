@@ -3,7 +3,6 @@
 ## zach.zundel@utah.edu
 ## 08/13/2016
 import subprocess
-from os.path import base
 
 
 class ValidationResult:

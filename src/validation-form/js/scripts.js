@@ -217,6 +217,13 @@ function displayValidationResult(data, textStatus, jqXHR) {
 
 function submitValidationRequest() {
 	if(verifyForm()) {
-		$.post('validate/', buildRequest(), displayValidationResult)
+		console.log(JSON.stringify(buildRequest()));
+
+		$.ajax({
+			url: 'http://localhost:5000/validate',
+			data: JSON.stringify(buildRequest()), 
+			success: displayValidationResult, 
+			type: 'POST',
+			contentType: 'application/json'})
 	}
 }
