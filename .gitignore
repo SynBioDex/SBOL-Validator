@@ -1,2 +1,4 @@
 uploads/*
-.idea/*
+env/
+*.pyc
+src/work/*
