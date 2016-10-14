@@ -46,7 +46,7 @@
 												"The main file for validation/conversion" />
 												</label> <input type="file" id=
 												"primaryInputFile" name="primaryInputFile"
-												size="10" />
+												size="10" onchange="mainFileChanged()" />
 												<p class="help-block" id="primaryFileHelp">
 													Upload an SBOL, GenBank, or FASTA file
 													for validation/conversion.
@@ -61,7 +61,7 @@
 												title=
 												"The file used for comparison -- must be SBOL" />
 												</label> <input type="file" id=
-												"diffInputFile" name="diffInputFile" />
+												"diffInputFile" name="diffInputFile" onchange="diffFileChanged()" />
 												<p class="help-block" id="diffFileHelp">
 													Upload an SBOL file for comparison.
 												</p>

@@ -1,3 +1,16 @@
+var mainFileInput = new FileReader();
+var diffFileInput = new FileReader();
+
+function mainFileChanged() {
+	console.log("Main file change recorded");
+	mainFileInput.readAsText(document.getElementById('primaryInputFile').files[0]);
+}
+
+function diffFileChanged() {
+	console.log("Diff file change rcorded");
+	diffFileInput.readAsText(document.getElementById('diffInputFile').files[0]);
+}
+
 function clearPaste(id) {
 	var fileInput = document.getElementById(id);
 	fileInput.value = "";
@@ -69,7 +82,7 @@ function mainFileGiven() {
 	var pastedGiven = document.getElementById("pastedPrimaryInputFile").value != "";
 	var fileGiven = document.getElementById("primaryInputFile").value != "";
 
-	if(pasted()) {
+	if(paste()) {
 		return pastedGiven;
 	} else {
 		return fileGiven;
@@ -80,7 +93,7 @@ function diffFileGiven() {
 	var pastedGiven = document.getElementById("pastedDiffInputFile").value != "";
 	var fileGiven = document.getElementById("diffInputFile").value != "";
 
-	if(pasted()) {
+	if(paste()) {
 		return pastedGiven;
 	} else {
 		return fileGiven;
@@ -93,38 +106,26 @@ function runningDiff() {
 	return runDiff;
 }
 
-function pasted() {
+function paste() {
 	return document.getElementById("usePaste").value == 'true';
 }
 
 function getPrimaryFileString() {
-	if(pasted()) {
+	if(paste()) {
 		return document.getElementById("pastedPrimaryInputFile").value;
 	} else {
-		var reader = new FileReader();
-		var file = document.getElementById("primaryInputFile").files[0];
-		reader.onload = function(e) { 
-	    	var contents = e.target.result;
-			console.log(contents);
-
-      	};
-      	
-		reader.readAsText(file);
+		return mainFileInput.result;
 	}
 }
 
 function getDiffFileString() {
-	if(pasted()) {
+	if(paste()) {
 		return document.getElementById("pastedDiffInputFile").value;
 	} else {
-		var reader = new FileReader();
-		var file = document.getElementById("diffInputFile").files[0];
-		reader.onload = function(e) { 
-	    	var contents = e.target.result;
-      	}
-      	return reader.readAsText(file);
+		return diffFileInput.result;
 	}
 }
+
 
 function buildRequest() {
 	var fullRequest = { };
@@ -145,6 +146,8 @@ function buildRequest() {
 			"main_file": mainFile,
 		};
 	}
+
+	console.log(fullRequest);
 
 	return fullRequest;
 }
@@ -168,22 +171,22 @@ function getVersion() {
 }
 
 function getUriPrefix() {
-	var value = document.getElementById("uriPrefix");
+	var value = document.getElementById("uriPrefix").value;
 	return returnFalseForEmpty(value);
 }
 
 function buildOptions() {
 	var options = { };
 
-	//options["language"] = getOutputLanguage();
-	//options["subset_uri"] = getSubsetUri();
+	options["language"] = getOutputLanguage();
+	options["subset_uri"] = getSubsetUri();
 	options["continue_after_first_error"] = !document.getElementById("failOnFirstError").checked;
 	options["provide_detailed_stack_trace"] = document.getElementById("displayFullStackTrace").checked;
 	options["check_uri_compliance"] = !document.getElementById("allowNonCompliantUris").checked;
 	options["check_completeness"] = !document.getElementById("allowIncompleteDocuments").checked;
 	options["check_best_practices"] = document.getElementById("checkBestPractices").checked;
-	//options["uri_prefix"] = getUriPrefix();
-	//options["version"] = getVersion();
+	options["uri_prefix"] = getUriPrefix();
+	options["version"] = getVersion();
 	options["test_equality"] = document.getElementById("performFileDiff").checked;
 
 	return options;
@@ -207,16 +210,13 @@ function getOutputLanguage() {
 }
 
 function displayValidationResult(data, textStatus, jqXHR) {
-
+	console.log(data);
+	console.log(textStatus);
+	console.log(jqXHR);
 }
 
 function submitValidationRequest() {
-	console.log("Submitted");
 	if(verifyForm()) {
-		console.log("verified");
-		console.log(buildRequest());
-		$.post('validate', buildRequest(), displayValidationResult)
-	} else {
-		// TODO: Error handling
+		$.post('validate/', buildRequest(), displayValidationResult)
 	}
 }
