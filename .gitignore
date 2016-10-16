@@ -2,3 +2,4 @@ uploads/*
 env/
 *.pyc
 src/work/*
+*.log
