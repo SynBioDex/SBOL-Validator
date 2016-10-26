@@ -6,7 +6,7 @@ from util import do_validation
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/validate", methods=["POST"])
+@app.route("/validate/", methods=["POST"], strict_slashes=False)
 def validate():
     validation_json = request.get_json()
     if validation_json is None:

@@ -244,13 +244,14 @@ function displayValidationResult(data, textStatus, jqXHR) {
 }
 
 function apiError(data, textStatus, jqXHR) {
+	console.log(data);
 	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 
 function submitValidationRequest() {
 	if(verifyForm()) {
 		$.ajax({
-			url: 'http://localhost:5000/validate',
+			url: '/validate/',
 			data: JSON.stringify(buildRequest()), 
 			success: displayValidationResult,
 			error: apiError,  

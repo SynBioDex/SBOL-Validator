@@ -45,15 +45,17 @@ class ValidationRun:
         except ValueError:
             result.broken_validation_request()
 
-        # Attempt to run command
+	wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
+
+	# Attempt to run command
         try:
-            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
+            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT, cwd=wd)
+            result.decipher(output)
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
             result.valid = False
-            result.errors += [e.output, ]    
+            result.errors += [e.output, ]
 
-        result.decipher(output.decode(sys.stdout.encoding))
 
         return result.json()
 
@@ -85,7 +87,7 @@ class ValidationOptions:
             self.output_file = self.output_file + '.fasta'
 
     def command(self, jar_path, validation_file, diff_file=None):
-        command = ["java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
+        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
 
         if self.test_equality and diff_file:
             command += ["-e", diff_file]
