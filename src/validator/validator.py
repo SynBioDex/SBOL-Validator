@@ -44,12 +44,13 @@ class ValidationRun:
         # Attempt to run command
         try:
             output = subprocess.run(command, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True)
+            result.decipher(output.stdout)
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
             result.valid = False;
             result.errors += [e.output, ]    
 
-        result.decipher(output.stdout)
+        
         return result
 
 
