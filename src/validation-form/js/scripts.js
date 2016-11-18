@@ -177,7 +177,7 @@ function buildOptions() {
 
 	options["language"] = getOutputLanguage();
 	options["subset_uri"] = getSubsetUri();
-	options["continue_after_first_error"] = !document.getElementById("failOnFirstError").checked;
+	options["continue_after_first_error"] = document.getElementById("failOnFirstError").checked;
 	options["provide_detailed_stack_trace"] = document.getElementById("displayFullStackTrace").checked;
 	options["check_uri_compliance"] = !document.getElementById("allowNonCompliantUris").checked;
 	options["check_completeness"] = !document.getElementById("allowIncompleteDocuments").checked;
