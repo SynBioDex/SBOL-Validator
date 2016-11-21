@@ -212,7 +212,7 @@ function parseData(data) {
 	if(data["valid"]) {
 		toReturn.push("Validation successful.");
 		if(!data["equality"]) {
-			if(data["errors"].length > 0) {
+			if(data["errors"].length > 2) {
 				toReturn.push("Conversion failed.");
 				toReturn = toReturn.concat(data["errors"]);
 			} else {
