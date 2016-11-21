@@ -49,25 +49,14 @@ class ValidationRun:
 
 	# Attempt to run command
         try:
-<<<<<<< HEAD
             output = subprocess.run(command, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True)
             result.decipher(output.stdout)
-=======
-            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT, cwd=wd)
-            result.decipher(output)
->>>>>>> 03fa0bd888caad9d9de535abde17c29673ec118d
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
             result.valid = False
             result.errors += [e.output, ]
-
-
-<<<<<<< HEAD
         
         return result
-=======
-        return result.json()
->>>>>>> 03fa0bd888caad9d9de535abde17c29673ec118d
 
 
 class ValidationOptions:
