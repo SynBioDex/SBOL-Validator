@@ -3,3 +3,4 @@ env/
 *.pyc
 src/work/*
 *.log
+*.swp
