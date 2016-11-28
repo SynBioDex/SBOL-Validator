@@ -15,7 +15,7 @@ class ValidationResult:
         self.errors = []
 
     def digest_errors(self, output):
-        self.errors = filter(None, output.strip(u'Validation failed.').split('\n'))
+        self.errors = filter(None, output.decode("utf-8", "ignore").strip(u'Validation failed.').split('\n'))
 
     def decipher(self, output):
         if "Validation successful, no errors." not in output:
