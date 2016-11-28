@@ -186,7 +186,24 @@ function buildOptions() {
 	options["version"] = getVersion();
 	options["test_equality"] = document.getElementById("performFileDiff").checked;
 
+	if(!paste() && runningDiff()) {
+		options["main_file_name"] = getMainFileName();
+		options["diff_file_name"] = getDiffFileName();
+	}
+
 	return options;
+}
+
+function getMainFileName() {
+	var mainFileName = document.getElementById("primaryInputFile").files[0].name;
+
+	return mainFileName;
+}
+
+function getDiffFileName() {
+	var diffFileName = document.getElementById("diffInputFile").files[0].name;
+
+	return diffFileName;
 }
 
 function getOutputLanguage() {
@@ -251,7 +268,7 @@ function apiError(data, textStatus, jqXHR) {
 function submitValidationRequest() {
 	if(verifyForm()) {
 		$.ajax({
-			url: '/validate/',
+			url: 'http://localhost:5000/validate/',
 			data: JSON.stringify(buildRequest()), 
 			success: displayValidationResult,
 			error: apiError,  

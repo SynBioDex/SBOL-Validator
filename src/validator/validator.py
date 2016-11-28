@@ -15,7 +15,7 @@ class ValidationResult:
         self.errors = []
 
     def digest_errors(self, output):
-        self.errors = filter(None, output.decode("utf-8", "ignore").strip(u'Validation failed.').split('\n'))
+        self.errors = filter(None, output.strip().strip(u'Validation failed.').split('\n'))
 
     def decipher(self, output):
         if "Validation successful, no errors." not in output:
@@ -45,11 +45,12 @@ class ValidationRun:
         except ValueError:
             result.broken_validation_request()
 
-	wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
+        wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
 
-	# Attempt to run command
+	    # Attempt to run command
         try:
-            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT, cwd=wd)
+            print(command)
+            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)#, cwd=wd)
             result.decipher(output)
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
@@ -72,6 +73,8 @@ class ValidationOptions:
     version = False
     insert_type = False
     test_equality = False
+    main_file_name = "main file"
+    diff_file_name = "comparison file"
 
 
     def build(self, data):
@@ -87,10 +90,10 @@ class ValidationOptions:
             self.output_file = self.output_file + '.fasta'
 
     def command(self, jar_path, validation_file, diff_file=None):
-        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language, "-mf", "main file", "-cf", "comparison file"]
+        command = ["java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
 
         if self.test_equality and diff_file:
-            command += ["-e", diff_file]
+            command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
             return command
         elif self.test_equality and not diff_file:
             raise ValueError
