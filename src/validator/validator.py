@@ -87,7 +87,7 @@ class ValidationOptions:
             self.output_file = self.output_file + '.fasta'
 
     def command(self, jar_path, validation_file, diff_file=None):
-        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
+        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language, "-mf", "main file", "-cf", "comparison file"]
 
         if self.test_equality and diff_file:
             command += ["-e", diff_file]
