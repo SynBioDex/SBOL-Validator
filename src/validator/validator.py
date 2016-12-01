@@ -25,9 +25,9 @@ class ValidationResult:
             self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
 
-    def broken_validation_request(self):
+    def broken_validation_request(self, command):
         self.valid = False
-        self.errors = ["Something about your validation request is contradictory or poorly-formed."]
+        self.errors = ["Something about your validation request is contradictory or poorly-formed.", " ".join(command)]
 
     def json(self):
         return self.__dict__
@@ -40,22 +40,19 @@ class ValidationRun:
 
     def execute(self):
         result = ValidationResult(self.options.output_file, self.options.test_equality)
-        try:
-            command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
-        except ValueError:
-            result.broken_validation_request()
-
-        wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
 
 	    # Attempt to run command
         try:
-            print(command)
-            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)#, cwd=wd)
+            command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
+	        wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
+            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT, cwd=wd)
             result.decipher(output)
         except subprocess.CalledProcessError as e:
             #If the command fails, the file is not valid.
             result.valid = False
             result.errors += [e.output, ]
+        except ValueError:
+            result.broken_validation_request(command)
 
 
         return result.json()
@@ -103,7 +100,7 @@ class ValidationOptions:
         
         if self.continue_after_first_error and not self.provide_detailed_stack_trace:
             command += ["-f"]
-        elif self.continue_after_first_error and self.provide_detailed_stack_trace:
+        elif not self.continue_after_first_error and self.provide_detailed_stack_trace:
             raise ValueError
         
         if self.provide_detailed_stack_trace:
