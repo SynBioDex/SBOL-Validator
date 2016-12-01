@@ -144,7 +144,7 @@ function buildRequest() {
 			"options": options,
 			"main_file": mainFile,
 		};
-	}
+	}	
 
 	return fullRequest;
 }
