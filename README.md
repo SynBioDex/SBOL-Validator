@@ -2,7 +2,7 @@
 A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
-The validator is currently live [here](http://www.async.ece.utah.edu/sbol-validator) with an API endpoint found at `http://www.async.ece.utah.edu/sbol-validator/endpoint.php`.
+The validator is currently live [here](http://www.async.ece.utah.edu/sbol-validator) with an API endpoint found at `http://www.async.ece.utah.edu/sbol-validator/validate`.
 
 ### Installation
 ##### System Requirements
@@ -11,7 +11,7 @@ The `upload_max_filesize` PHP directive must be configured to allow uploads of w
 
 ##### Installation Process
 Installation of this validator is quite simple -- simply drop the contents of the directory into a directory on your webserver.
-Ensure that there is an `uploads` folder in the root directory and you're good to go!
+Ensure that there is an `work` folder in the root directory and you're good to go!
 
 ### API
 The API for the validator is a RESTful API which permits programmatic access to the validation runtimes. The validator can be set up at 
