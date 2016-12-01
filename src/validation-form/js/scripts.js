@@ -268,7 +268,7 @@ function apiError(data, textStatus, jqXHR) {
 function submitValidationRequest() {
 	if(verifyForm()) {
 		$.ajax({
-			url: 'http://localhost:5000/validate/',
+			url: '/validate/',
 			data: JSON.stringify(buildRequest()), 
 			success: displayValidationResult,
 			error: apiError,  
