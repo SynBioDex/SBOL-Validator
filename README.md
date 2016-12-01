@@ -18,43 +18,49 @@ The API for the validator is a RESTful API which permits programmatic access to 
 ##### Setup
 The API installation and the validator installation are coupled, in that if you have an accessible and working validator then the API has also been successfully installed. 
 ##### Usage
-The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as base-64 encoded strings with the names `mainFile` or `diffFile`. `mainFile` is always required, and `difFile` is required if the `diff` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
+The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as base-64 encoded strings with the names `main_file` or `diff_file`. `main_file` is always required, and `diff_file` is required if the `test_equality` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
 
 ###### Validation Options
 Below is an example of a valid JSON top-level `validationOptions` object. All values are required.
 ````
-"validationOptions" : {"output": "SBOL1",
-                       "diff": false,
-                       "noncompliantUrisAllowed": false,
-                       "incompleteDocumentsAllowed": false,
-                       "bestPracticesCheck": false,
-                       "failOnFirstError": false,
-                       "displayFullErrorStackTrace": false,
-                       "topLevelToConvert": "",
-                       "uriPrefix": "",
-                       "version": "",
-                       }
+"validationOptions": {"output" : "FASTA",
+                                 "test_equality": false,
+                                 "check_uri_compliance": true,
+                                 "check_completeness": true,
+                                 "check_best_practices": false,
+                                 "continue_after_first_error": false,
+                                 "provide_detailed_stack_trace": false,
+                                 "uri_prefix": "",
+                                 "version": "",
+                                 "subset_uri": "",
+                                 "insert_type": false,
+                                 "main_file_name": "main file",
+                                 "diff_file_name": "comparison file",
+                                 }
 ````
 
-The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances. The `output` flag has the following options: `SBOL1`, `SBOL2`, `GenBank`, `FASTA`. Please note that all fields and values are case-sensitive.
+The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances. The `language` flag has the following options: `SBOL1`, `SBOL2`, `GenBank`, `FASTA`. Please note that all fields and values are case-sensitive.
 
 ##### Example
 ```python
 import requests
 
 request = {"validationOptions": {"output" : "FASTA",
-                                 "diff": False,
-                                 "noncompliantUrisAllowed": False,
-                                 "incompleteDocumentsAllowed": False,
-                                 "bestPracticesCheck": False,
-                                 "failOnFirstError": False,
-                                 "displayFullErrorStackTrace": False,
-                                 "topLevelToConvert": "",
-                                 "uriPrefix": "",
+                                 "test_equality": False,
+                                 "check_uri_compliance": True,
+                                 "check_completeness": True,
+                                 "check_best_practices": False,
+                                 "continue_after_first_error": False,
+                                 "provide_detailed_stack_trace": False,
+                                 "uri_prefix": "",
                                  "version": "",
+                                 "subset_uri": "",
+                                 "insert_type": False,
+                                 "main_file_name": "main file",
+                                 "diff_file_name": "comparison file",
                                  },
            "wantFileBack": True,
-           "mainFile": open("sequence1.xml").read()}
+           "main_file": open("sequence1.xml").read()}
 
 resp = requests.post("http://localhost/sbol-validator/endpoint.php", json=request)
 ```
