@@ -13,6 +13,7 @@ def validate():
     """
     validation_json = request.get_json()
     if validation_json is None:
+        print(request.__dict__)
         raise InvalidUsage("Request content type must be application/json")
     else:
         response = json.jsonify(do_validation(validation_json))
