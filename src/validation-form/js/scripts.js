@@ -228,7 +228,6 @@ function getOutputLanguage() {
 
 function parseData(data) {
 	var toReturn = [];
-	console.log(data);
 	if(data["valid"]) {
 		if(!data["equality"]) {
 			if(data["errors"][data["errors"].length - 1] === "Conversion failed.") {
@@ -245,7 +244,6 @@ function parseData(data) {
 			}
 		}
 	} else {
-		console.log(data["errors"]);
 		toReturn = toReturn.concat(data["errors"]);
 	}
 
@@ -254,13 +252,11 @@ function parseData(data) {
 
 function displayValidationResult(data, textStatus, jqXHR) {
 	var interpreted = parseData(data);
-	console.log(interpreted);
 	document.getElementById("result").innerHTML = interpreted.join("<br>");
 	document.getElementById("myModal").style.display = "block";
 }
 
 function apiError(data, textStatus, jqXHR) {
-	console.log(data);
 	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 
