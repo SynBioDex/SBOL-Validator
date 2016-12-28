@@ -61,6 +61,7 @@ function disallowStackTrace() {
 	var printStackTrace = document.getElementById("displayFullStackTrace");
 
 	printStackTrace.disabled = true;
+	printStackTrace.checked = false;
 }
 
 function verifyForm() {
@@ -230,11 +231,9 @@ function parseData(data) {
 	console.log(data);
 	if(data["valid"]) {
 		if(!data["equality"]) {
-			if(data["errors"].length > 2) {
-				toReturn.push("Conversion failed.");
+			if(data["errors"][data["errors"].length - 1] === "Conversion failed.") {
 				toReturn = toReturn.concat(data["errors"]);
 			} else {
-				toReturn.push("Conversion successful.");
 				toReturn.push("<a href='../../" + data["output_file"] + "'>Validated and converted file</a>");
 			}
 		} else {

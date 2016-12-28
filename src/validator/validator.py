@@ -15,9 +15,7 @@ class ValidationResult:
         self.errors = []
 
     def digest_errors(self, output):
-        print(output)
         self.errors = output.strip().split('\n')
-        print(self.errors)
 
     def decipher(self, output):
         if "Validation successful, no errors." not in output:
@@ -96,12 +94,14 @@ class ValidationOptions:
             command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
             return command
         elif self.test_equality and not diff_file:
+            print("Equality")
             raise ValueError
 
         if self.subset_uri:
             command += ["-s", self.subset_uri]
 
         if self.provide_detailed_stack_trace and not self.fail_on_first_error:
+            print("Stack")
             raise ValueError
 
         if self.fail_on_first_error:
