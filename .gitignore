@@ -1,5 +1,5 @@
 uploads/*
-env/
+venv/
 *.pyc
 src/work/*
 *.log

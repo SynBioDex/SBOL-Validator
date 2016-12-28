@@ -44,7 +44,7 @@ class ValidationRun:
 	    # Attempt to run command
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
-            output = subprocess.check_output(command, universal_newlines=True, shell=True, stderr=subprocess.STDOUT)
+            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
             result.decipher(output)
         except subprocess.CalledProcessError as exception:
             #If the command fails, the file is not valid.
@@ -88,7 +88,7 @@ class ValidationOptions:
             self.output_file = self.output_file + '.fasta'
 
     def command(self, jar_path, validation_file, diff_file=None):
-        command = ["java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
+        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
 
         if self.test_equality and diff_file:
             command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
