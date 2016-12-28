@@ -1,6 +1,6 @@
 from flask import Flask, request, json
 from flask_cors import CORS
-from util import do_validation
+from validationapi.util import do_validation
 
 
 app = Flask(__name__)

@@ -4,3 +4,5 @@ env/
 src/work/*
 *.log
 *.swp
+sbol-validator/*
+*.bat
