@@ -2,16 +2,14 @@
 A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
-The validator is currently live [here](http://www.async.ece.utah.edu/sbol-validator) with an API endpoint found at `http://www.async.ece.utah.edu/sbol-validator/validate`.
+The validator is currently live [here](http://www.async.ece.utah.edu/validator/) with an API endpoint found at `http://www.async.ece.utah.edu/validate/`.
 
 ### Installation
 ##### System Requirements
-Your server mush have PHP5 installed and allow for the command `shell_exec()` and execution of Java on the command line by PHP. 
-The `upload_max_filesize` PHP directive must be configured to allow uploads of whatever size you desire.
+Coming soon.
 
 ##### Installation Process
-Installation of this validator is quite simple -- simply drop the contents of the directory into a directory on your webserver.
-Ensure that there is an `work` folder in the root directory and you're good to go!
+Coming soon.
 
 ### API
 The API for the validator is a RESTful API which permits programmatic access to the validation runtimes. The validator can be set up at 
@@ -63,7 +61,7 @@ request = {"options": {"language": "SBOL1",
            "return_file": True,
            "main_file": open("sequence1.xml").read()}
 
-resp = requests.post("http://localhost/sbol-validator/validate", json=request)
+resp = requests.post("http://www.async.ece.utah.edu/validate/", json=request)
 ```
 This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
 
