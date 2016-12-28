@@ -44,7 +44,7 @@ class ValidationRun:
 	    # Attempt to run command
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
-	        wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src');
+            wd = os.path.join(os.path.abspath(os.sep), 'home', 'zach', 'SBOL-Validator', 'src')
             output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT, cwd=wd)
             result.decipher(output)
         except subprocess.CalledProcessError as e:
@@ -70,9 +70,12 @@ class ValidationOptions:
     version = False
     insert_type = False
     test_equality = False
+    return_file = True
     main_file_name = "main file"
     diff_file_name = "comparison file"
 
+    def __init__(self, return_file):
+        self.return_file = return_file
 
     def build(self, data):
         for key, value in data.items():
@@ -123,6 +126,9 @@ class ValidationOptions:
 
         if self.insert_type:
             command += ["-t"]
+
+        if not self.return_file:
+            command += ["-no"]
 
         return command
 

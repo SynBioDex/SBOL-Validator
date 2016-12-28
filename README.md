@@ -21,18 +21,21 @@ The API installation and the validator installation are coupled, in that if you 
 The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as base-64 encoded strings with the names `mainFile` or `diffFile`. `mainFile` is always required, and `difFile` is required if the `diff` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
 
 ###### Validation Options
-Below is an example of a valid JSON top-level `validationOptions` object. All values are required.
+Below is an example of a valid JSON top-level `options` object. All values are required.
 ````
-"validationOptions" : {"output": "SBOL1",
-                       "diff": false,
-                       "noncompliantUrisAllowed": false,
-                       "incompleteDocumentsAllowed": false,
-                       "bestPracticesCheck": false,
-                       "failOnFirstError": false,
-                       "displayFullErrorStackTrace": false,
-                       "topLevelToConvert": "",
-                       "uriPrefix": "",
+"options" : {"language": "SBOL1",
+                       "test_equality": false,
+                       "check_uri_compliance": false,
+                       "check_completeness": false,
+                       "check_best_practices": false,
+                       "continue_after_first_error": false,
+                       "provide_detailed_stack_trace": false,
+                       "subset_uri": "",
+                       "uri_prefix": "",
                        "version": "",
+                       "insert_type": false;
+                       "main_file_name": "main file",
+                       "diff_file_name": "diff file", 
                        }
 ````
 
@@ -42,21 +45,24 @@ The options here correspond to the form options of the validation browser applic
 ```python
 import requests
 
-request = {"validationOptions": {"output" : "FASTA",
-                                 "diff": False,
-                                 "noncompliantUrisAllowed": False,
-                                 "incompleteDocumentsAllowed": False,
-                                 "bestPracticesCheck": False,
-                                 "failOnFirstError": False,
-                                 "displayFullErrorStackTrace": False,
-                                 "topLevelToConvert": "",
-                                 "uriPrefix": "",
-                                 "version": "",
-                                 },
-           "wantFileBack": True,
-           "mainFile": open("sequence1.xml").read()}
+request = {"options": {"language": "SBOL1",
+                       "test_equality": False,
+                       "check_uri_compliance": False,
+                       "check_completeness": False,
+                       "check_best_practices": False,
+                       "continue_after_first_error": False,
+                       "provide_detailed_stack_trace": False,
+                       "subset_uri": "",
+                       "uri_prefix": "",
+                       "version": "",
+                       "insert_type": False,
+                       "main_file_name": "main file",
+                       "diff_file_name": "diff file", 
+                       },
+           "return_file": True,
+           "main_file": open("sequence1.xml").read()}
 
-resp = requests.post("http://localhost/sbol-validator/endpoint.php", json=request)
+resp = requests.post("http://localhost/sbol-validator/validate", json=request)
 ```
 This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
 

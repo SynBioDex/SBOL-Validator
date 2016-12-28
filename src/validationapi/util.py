@@ -7,7 +7,7 @@ def do_validation(json):
     """
     Performs validation based on a json request
     """
-    options = ValidationOptions()
+    options = ValidationOptions(json['return_file'])
     options.build(json['options'])
 
     main_filename = os.path.join('work', str(uuid.uuid4()) + ".sbol")
