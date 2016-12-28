@@ -46,7 +46,6 @@ def handle_invalid_usage(error):
     Communicates invalid usage to the user
     """
     response = json.dumps(error.to_dict())
-    response.status_code = error.status_code
     return response
 
 if __name__ == '__main__':
