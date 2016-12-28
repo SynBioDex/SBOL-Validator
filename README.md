@@ -63,7 +63,7 @@ request = {"options": {"language": "SBOL1",
            "return_file": True,
            "main_file": open("sequence1.xml").read()}
 
-resp = requests.post("http://localhost/sbol-validator/validate", json=request)
+resp = requests.post("http://www.async.ece.utah.edu/validate/", json=request)
 ```
 This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
 
