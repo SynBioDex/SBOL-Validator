@@ -61,6 +61,7 @@ function disallowStackTrace() {
 	var printStackTrace = document.getElementById("displayFullStackTrace");
 
 	printStackTrace.disabled = true;
+	printStackTrace.checked = false;
 }
 
 function verifyForm() {
@@ -137,12 +138,14 @@ function buildRequest() {
 		fullRequest = {
 			"options": options,
 			"main_file": mainFile,
-			"diff_file": diffFile
+			"diff_file": diffFile,
+			"return_file": true,
 		};
 	} else {
 		fullRequest = {
 			"options": options,
 			"main_file": mainFile,
+			"return_file": true,
 		};
 	}	
 
@@ -177,7 +180,7 @@ function buildOptions() {
 
 	options["language"] = getOutputLanguage();
 	options["subset_uri"] = getSubsetUri();
-	options["continue_after_first_error"] = document.getElementById("failOnFirstError").checked;
+	options["fail_on_first_error"] = document.getElementById("failOnFirstError").checked;
 	options["provide_detailed_stack_trace"] = document.getElementById("displayFullStackTrace").checked;
 	options["check_uri_compliance"] = !document.getElementById("allowNonCompliantUris").checked;
 	options["check_completeness"] = !document.getElementById("allowIncompleteDocuments").checked;
@@ -225,15 +228,11 @@ function getOutputLanguage() {
 
 function parseData(data) {
 	var toReturn = [];
-	console.log(data);
 	if(data["valid"]) {
-		toReturn.push("Validation successful.");
 		if(!data["equality"]) {
-			if(data["errors"].length > 2) {
-				toReturn.push("Conversion failed.");
+			if(data["errors"][data["errors"].length - 1] === "Conversion failed.") {
 				toReturn = toReturn.concat(data["errors"]);
 			} else {
-				toReturn.push("Conversion successful.");
 				toReturn.push("<a href='../../" + data["output_file"] + "'>Validated and converted file</a>");
 			}
 		} else {
@@ -245,8 +244,6 @@ function parseData(data) {
 			}
 		}
 	} else {
-		console.log(data["errors"]);
-		toReturn.push("Validation failed.");
 		toReturn = toReturn.concat(data["errors"]);
 	}
 
@@ -255,13 +252,11 @@ function parseData(data) {
 
 function displayValidationResult(data, textStatus, jqXHR) {
 	var interpreted = parseData(data);
-	console.log(interpreted);
 	document.getElementById("result").innerHTML = interpreted.join("<br>");
 	document.getElementById("myModal").style.display = "block";
 }
 
 function apiError(data, textStatus, jqXHR) {
-	console.log(data);
 	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 

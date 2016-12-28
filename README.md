@@ -21,23 +21,23 @@ The API installation and the validator installation are coupled, in that if you 
 The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as base-64 encoded strings with the names `main_file` or `diff_file`. `main_file` is always required, and `diff_file` is required if the `test_equality` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
 
 ###### Validation Options
-Below is an example of a valid JSON top-level `validationOptions` object. All values are required.
-````
-"validationOptions": {"output" : "FASTA",
-                                 "test_equality": false,
-                                 "check_uri_compliance": true,
-                                 "check_completeness": true,
-                                 "check_best_practices": false,
-                                 "continue_after_first_error": false,
-                                 "provide_detailed_stack_trace": false,
-                                 "uri_prefix": "",
-                                 "version": "",
-                                 "subset_uri": "",
-                                 "insert_type": false,
-                                 "main_file_name": "main file",
-                                 "diff_file_name": "comparison file",
-                                 }
-````
+Below is an example of a valid JSON top-level `options` object. All values are required.
+```
+"options" : {"language": "SBOL1",
+                       "test_equality": false,
+                       "check_uri_compliance": false,
+                       "check_completeness": false,
+                       "check_best_practices": false,
+                       "continue_after_first_error": false,
+                       "provide_detailed_stack_trace": false,
+                       "subset_uri": "",
+                       "uri_prefix": "",
+                       "version": "",
+                       "insert_type": false;
+                       "main_file_name": "main file",
+                       "diff_file_name": "diff file", 
+                       }
+```
 
 The options here correspond to the form options of the validation browser application, which should be referred to in order to understand each of their significances. The `language` flag has the following options: `SBOL1`, `SBOL2`, `GenBank`, `FASTA`. Please note that all fields and values are case-sensitive.
 
@@ -45,24 +45,25 @@ The options here correspond to the form options of the validation browser applic
 ```python
 import requests
 
-request = {"validationOptions": {"output" : "FASTA",
-                                 "test_equality": False,
-                                 "check_uri_compliance": True,
-                                 "check_completeness": True,
-                                 "check_best_practices": False,
-                                 "continue_after_first_error": False,
-                                 "provide_detailed_stack_trace": False,
-                                 "uri_prefix": "",
-                                 "version": "",
-                                 "subset_uri": "",
-                                 "insert_type": False,
-                                 "main_file_name": "main file",
-                                 "diff_file_name": "comparison file",
-                                 },
-           "wantFileBack": True,
+
+request = {"options": {"language": "SBOL1",
+                       "test_equality": False,
+                       "check_uri_compliance": False,
+                       "check_completeness": False,
+                       "check_best_practices": False,
+                       "continue_after_first_error": False,
+                       "provide_detailed_stack_trace": False,
+                       "subset_uri": "",
+                       "uri_prefix": "",
+                       "version": "",
+                       "insert_type": False,
+                       "main_file_name": "main file",
+                       "diff_file_name": "diff file", 
+                       },
+           "return_file": True,
            "main_file": open("sequence1.xml").read()}
 
-resp = requests.post("http://localhost/sbol-validator/endpoint.php", json=request)
+resp = requests.post("http://localhost/sbol-validator/validate", json=request)
 ```
 This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
 
