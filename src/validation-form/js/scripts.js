@@ -229,7 +229,6 @@ function parseData(data) {
 	var toReturn = [];
 	console.log(data);
 	if(data["valid"]) {
-		toReturn.push("Validation successful.");
 		if(!data["equality"]) {
 			if(data["errors"].length > 2) {
 				toReturn.push("Conversion failed.");
@@ -248,7 +247,6 @@ function parseData(data) {
 		}
 	} else {
 		console.log(data["errors"]);
-		toReturn.push("Validation failed.");
 		toReturn = toReturn.concat(data["errors"]);
 	}
 

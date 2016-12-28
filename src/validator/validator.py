@@ -15,7 +15,9 @@ class ValidationResult:
         self.errors = []
 
     def digest_errors(self, output):
-        self.errors = output.strip().strip(u'Validation failed.').split('\n')
+        print(output)
+        self.errors = output.strip().split('\n')
+        print(self.errors)
 
     def decipher(self, output):
         if "Validation successful, no errors." not in output:
@@ -52,7 +54,6 @@ class ValidationRun:
             result.errors += [exception.output, ]
         except ValueError:
             result.broken_validation_request(command)
-
 
         return result.json()
 
