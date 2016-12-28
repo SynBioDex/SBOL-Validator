@@ -16,7 +16,7 @@ The API for the validator is a RESTful API which permits programmatic access to 
 ##### Setup
 The API installation and the validator installation are coupled, in that if you have an accessible and working validator then the API has also been successfully installed. 
 ##### Usage
-The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as base-64 encoded strings with the names `main_file` or `diff_file`. `main_file` is always required, and `diff_file` is required if the `test_equality` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
+The API accepts a JSON object containing between three and four top-level members. One to two of these members are files, which should be passed as strings with the names `main_file` or `diff_file`. `main_file` is always required, and `diff_file` is required if the `test_equality` validation option is selected. Additionally, there is a boolean `wantFileBack` which is required and will dictate whether a file or a simple success message is returned if validation is successful.
 
 ###### Validation Options
 Below is an example of a valid JSON top-level `options` object. All values are required.
@@ -63,7 +63,7 @@ request = {"options": {"language": "SBOL1",
 
 resp = requests.post("http://www.async.ece.utah.edu/validate/", json=request)
 ```
-This Python example prepares a JSON object, adds the base64-encoded string of the SBOL file, and POSTs the request to the specified endpoint.
+This Python example prepares a JSON object, adds the string of the SBOL file, and POSTs the request to the specified endpoint.
 
 ### Browser Usage
 To connect to the browser application, simply open a browser and navigate to the root directory. Upload a file for validation and select the desired options.
