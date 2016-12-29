@@ -121,45 +121,114 @@
 
 <p>Welcome to the SBOL Validation/Conversion API! This API allows for the validation of documents encoded using the <a href="http://sbolstandard.org">SBOL</a> data standard.</p>
 
-<h1 id="kittens">Kittens</h1>
+<h1 id="validation-conversion">Validation/Conversion</h1>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<h2 id="validate-convert-file">Validate/convert file</h2>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"sequence1.xml"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span> <span class="s">'options'</span><span class="p">:</span> <span class="p">{</span><span class="s">'language'</span> <span class="p">:</span> <span class="s">'GenBank'</span><span class="p">,</span>
+                        <span class="s">'test_equality'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'check_uri_compliance'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'check_completeness'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'check_best_practices'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'fail_on_first_error'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'provide_detailed_stack_trace'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'subset_uri'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+                        <span class="s">'uri_prefix'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+                        <span class="s">'version'</span><span class="p">:</span> <span class="s">''</span><span class="p">,</span>
+                        <span class="s">'insert_type'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                        <span class="s">'main_file_name'</span><span class="p">:</span> <span class="s">'main file'</span><span class="p">,</span>
+                        <span class="s">'diff_file_name'</span><span class="p">:</span> <span class="s">'comparison file'</span><span class="p">,</span>
+                                <span class="p">},</span>
+            <span class="s">'return_file'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="s">'main_file'</span><span class="p">:</span> <span class="nb">file</span>
+          <span class="p">}</span>
+
+
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"http://www.async.ece.utah.edu/validate/"</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript"><code><span class="nx">request</span><span class="p">({</span> <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+              <span class="na">uri</span><span class="p">:</span> <span class="s1">'http://www.async.ece.utah.edu/validate/'</span><span class="p">,</span>
+              <span class="s1">'content-type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+              <span class="na">json</span><span class="p">:</span> <span class="p">{</span> <span class="s1">'options'</span><span class="p">:</span> <span class="p">{</span>  <span class="s1">'language'</span> <span class="p">:</span> <span class="s1">'GenBank'</span><span class="p">,</span>
+                                <span class="s1">'test_equality'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'check_uri_compliance'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'check_completeness'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'check_best_practices'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'fail_on_first_error'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'provide_detailed_stack_trace'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'subset_uri'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+                                <span class="s1">'uri_prefix'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+                                <span class="s1">'version'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+                                <span class="s1">'insert_type'</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                <span class="s1">'main_file_name'</span><span class="p">:</span> <span class="s1">'main file'</span><span class="p">,</span>
+                                <span class="s1">'diff_file_name'</span><span class="p">:</span> <span class="s1">'comparison file'</span><span class="p">,</span>
+                            <span class="p">},</span>
+                <span class="s1">'return_file'</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="s1">'main_file'</span><span class="p">:</span> <span class="nx">file</span>
+                <span class="p">}</span>
+            <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{}</span>
+        <span class="p">);</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre class="highlight json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"valid"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"equality"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">""</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"output_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"work/sequence1.gb"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p>This endpoint validates SBOL and returns the address of a file in a specified format.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://example.com/api/kittens</code></p>
+<p><code class="prettyprint">GET http://www.async.ece.utah.edu/validate</code></p>
 
 <h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>options</td>
+<td>yes</td>
+<td>N/A</td>
+<td>A dictionary containing the validation/conversion options, detailed below</td>
+</tr>
+<tr>
+<td>return_file</td>
+<td>no</td>
+<td>false</td>
+<td>Whether or not to return the file contents as a string</td>
+</tr>
+<tr>
+<td>main_file</td>
+<td>yes</td>
+<td>N/A</td>
+<td>A string containing the contents for the main file of the validation request</td>
+</tr>
+<tr>
+<td>diff_file</td>
+<td>no</td>
+<td>N/A</td>
+<td>A string containing the contents for the file to be compared against the main_file</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+  As of version 1.0, the return_file option is not implemented and is only detailed here for forwards-compatibility
+</aside>
+
+<h3 id="options">Options</h3>
 
 <table><thead>
 <tr>
@@ -169,36 +238,100 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>language</td>
+<td>&ldquo;SBOL2&rdquo;</td>
+<td>Selects the output file format from &ldquo;SBOL2&rdquo;, &ldquo;SBOL1&rdquo;, &ldquo;GenBank&rdquo;, and &ldquo;FASTA&rdquo;</td>
 </tr>
 <tr>
-<td>available</td>
+<td>test_equality</td>
+<td>false</td>
+<td>If set to true, a diff_file is required and the main_file and diff_file will be compared</td>
+</tr>
+<tr>
+<td>check_uri_compliance</td>
 <td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>If set to false, URIs in the file will not be checked for compliance with the SBOL specification</td>
+</tr>
+<tr>
+<td>check_completeness</td>
+<td>true</td>
+<td>If set to false, not all referenced objects must be described within the given main_file</td>
+</tr>
+<tr>
+<td>check_best_practices</td>
+<td>false</td>
+<td>If set to true, the file is checked for the best practice rules set in the SBOL specification</td>
+</tr>
+<tr>
+<td>fail_on_first_error</td>
+<td>false</td>
+<td>If set to true, the validator will fail at the first error</td>
+</tr>
+<tr>
+<td>provide_detailed_stack_trace</td>
+<td>false</td>
+<td>If set to true (and fail_on_first_error is true) the validator will provide a stack trace for the first validation error</td>
+</tr>
+<tr>
+<td>subset_uri</td>
+<td>none</td>
+<td>A URI of a TopLevel described in the given SBOL file &ndash; the output will be only that TopLevel and its described children</td>
+</tr>
+<tr>
+<td>uri_prefix</td>
+<td>none</td>
+<td>Required for conversion from FASTA and GenBank to SBOL1 or SBOL2, used to generate URIs</td>
+</tr>
+<tr>
+<td>version</td>
+<td>none</td>
+<td>Adds the version to all URIs and to the document</td>
+</tr>
+<tr>
+<td>insert_type</td>
+<td>false</td>
+<td>Inserts type into the URIs of objects</td>
+</tr>
+<tr>
+<td>main_file_name</td>
+<td>&ldquo;main file&rdquo;</td>
+<td>The name of the main file, only used for reporting differences between two files when test_equality is true</td>
+</tr>
+<tr>
+<td>diff_file_name</td>
+<td>&ldquo;comparison file&rdquo;</td>
+<td>The name of the secondary file (diff_file), only used in reporting differences between two files when test_equality is true</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-
-<h3 id="url-parameters">URL Parameters</h3>
+<h3 id="response">Response</h3>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>valid</td>
+<td>false</td>
+<td>Returns true if the file given is valid SBOL, or can be converted to valid SBOL</td>
+</tr>
+<tr>
+<td>equality</td>
+<td>false</td>
+<td>Meaningful only if the test_equality option is true, and is true if the two files have no differences</td>
+</tr>
+<tr>
+<td>errors</td>
+<td>[&ldquo;]</td>
+<td>&lsquo;errors&rsquo; is a bit of a misnomer, this is simply the output of running the validation split by lines</td>
+</tr>
+<tr>
+<td>output_file</td>
+<td>N/A</td>
+<td>The URI of the file requested</td>
 </tr>
 </tbody></table>
 
