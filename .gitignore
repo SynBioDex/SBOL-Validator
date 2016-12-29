@@ -1,8 +1,0 @@
-uploads/*
-venv/
-*.pyc
-src/work/*
-*.log
-*.swp
-sbol-validator/*
-*.bat
