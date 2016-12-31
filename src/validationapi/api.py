@@ -18,6 +18,7 @@ def validate():
     else:
         response = json.jsonify(do_validation(validation_json))
         response.headers.add('Access-Control-Allow-Origin', '*')
+        response.json["output_file"] = "http://" + request.url_root + "/" + response.json["output_file"]
         return response
 
 class InvalidUsage(Exception):
