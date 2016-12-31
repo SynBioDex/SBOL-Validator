@@ -17,7 +17,7 @@ def validate():
         raise InvalidUsage("Request content type must be application/json")
     else:
         result = do_validation(validation_json)
-        result["output_file"] = "http://" + request.url_root + "/" + result["output_file"]
+        result["output_file"] = "http://" + request.url_root + result["output_file"]
         response = json.jsonify(result)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
