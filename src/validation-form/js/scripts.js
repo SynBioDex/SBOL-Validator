@@ -233,7 +233,7 @@ function parseData(data) {
 			if(data["errors"][data["errors"].length - 1] === "Conversion failed.") {
 				toReturn = toReturn.concat(data["errors"]);
 			} else {
-				toReturn.push("<a href='../../" + data["output_file"] + "'>Validated and converted file</a>");
+				toReturn.push("<a href='" + data["output_file"] + "'>Validated and converted file</a>");
 			}
 		} else {
 			if(data["errors"].length > 0) {
