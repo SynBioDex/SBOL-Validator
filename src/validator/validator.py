@@ -9,7 +9,7 @@ import sys, os
 
 class ValidationResult:
     def __init__(self, output_file, equality):
-        self.equality = equality
+        self.check_equality = equality
         self.output_file = output_file
         self.valid = False
         self.errors = []
@@ -129,4 +129,5 @@ class ValidationOptions:
         if not self.return_file:
             command += ["-no"]
 
+        print(command)
         return command
