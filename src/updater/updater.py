@@ -3,7 +3,9 @@ from os.path import dirname, abspath
 import subprocess
 
 def update():
-    project_dir = dirname(dirname(abspath(__file__))) 
+    project_dir = dirname(dirname(abspath(__file__)))
+    print(project_dir)
+
     repo = git.cmd.Git(project_dir)
     repo.pull()
 
