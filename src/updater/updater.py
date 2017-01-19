@@ -1,5 +1,14 @@
+import git
+from os.path import dirname, abspath
 import subprocess
 
 def update():
-    command = "./update.sh"
-    subprocess.call(command, universal_newlines=True, stderr=subprocess.STDOUT)
+    project_dir = dirname(dirname(abspath(__file__))) 
+    repo = git.cmd.Git(project_dir)
+    repo.pull()
+
+    if subprocess.call("/bin/systemctl restart sbol-validator"):
+        return "Update successful"
+    else:
+        return "Update unsuccessful. Check the logs."
+        
