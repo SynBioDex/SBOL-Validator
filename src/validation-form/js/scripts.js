@@ -257,6 +257,7 @@ function displayValidationResult(data, textStatus, jqXHR) {
 }
 
 function apiError(data, textStatus, jqXHR) {
+	console.log(data);
 	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 
