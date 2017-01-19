@@ -4,7 +4,8 @@
 ## 08/13/2016
 import subprocess
 import uuid
-import sys, os
+import traceback
+import os
 
 
 class ValidationResult:
@@ -17,7 +18,7 @@ class ValidationResult:
     def digest_errors(self, output):
         self.errors = output.strip().split('\n')
 
-    def decipher(self, output):
+    def decipher(self, output, options):
         if self.check_equality:
             if "differ" in output or "not found in" in output:
                 self.equal = False
@@ -30,6 +31,10 @@ class ValidationResult:
         else:
             self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
+
+        if options.return_file:
+            with open(options.output_file, 'r') as file:
+                self.result = file.read()
 
     def broken_validation_request(self, command):
         self.valid = False
@@ -51,12 +56,13 @@ class ValidationRun:
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
             output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
-            result.decipher(output)
+            result.decipher(output, self.options)
         except subprocess.CalledProcessError as exception:
             #If the command fails, the file is not valid.
             result.valid = False
             result.errors += [exception.output, ]
-        except ValueError:
+        except ValueError as ve:
+            print(traceback.print_tb(ve.__traceback__))
             result.broken_validation_request(command)
 
         return result.json()
@@ -99,12 +105,14 @@ class ValidationOptions:
         if self.test_equality and diff_file:
             command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
         elif self.test_equality and not diff_file:
+            print("Diff break")
             raise ValueError
 
         if self.subset_uri:
             command += ["-s", self.subset_uri]
 
         if self.provide_detailed_stack_trace and not self.fail_on_first_error:
+            print("FOF break")
             raise ValueError
 
         if self.fail_on_first_error:
