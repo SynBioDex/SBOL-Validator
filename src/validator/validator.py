@@ -18,6 +18,12 @@ class ValidationResult:
         self.errors = output.strip().split('\n')
 
     def decipher(self, output):
+        if self.check_equality:
+            if "differ" in output or "not found in" in output:
+                self.equal = False
+            else:
+                self.equal = True
+
         if "Validation successful, no errors." not in output:
             self.valid = False
             self.digest_errors(output)
