@@ -7,7 +7,7 @@ from updater.updater import update as run_update
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/update/', methods=["GET"], strict_slashes=False)
+@app.route('/update/', strict_slashes=False)
 def update():
     if run_update():
         return "Update successful"
