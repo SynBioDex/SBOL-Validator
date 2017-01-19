@@ -7,8 +7,7 @@ def update():
     repo = git.cmd.Git(project_dir)
     repo.pull()
 
-    if subprocess.call("/bin/systemctl restart sbol-validator"):
-        return "Update successful"
-    else:
-        return "Update unsuccessful. Check the logs."
-        
+    # if subprocess.call("/bin/systemctl restart sbol-validator"):
+    #     return "Update successful"
+    # else:
+    #     return "Update unsuccessful. Check the logs."
