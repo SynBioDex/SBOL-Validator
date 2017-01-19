@@ -9,3 +9,5 @@ def update():
         return "Update unsuccessful. Check the logs."
 
     uwsgi.reload()
+
+    return "Update successful."
