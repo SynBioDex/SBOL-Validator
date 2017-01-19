@@ -236,11 +236,11 @@ function parseData(data) {
 				toReturn.push("<a href='" + data["output_file"] + "'>Validated and converted file</a>");
 			}
 		 if(data["check_equality"]) {
-			if(data["errors"].length > 0) {
+			if(data["equal"]) {
+				toReturn.push("No differences");
+			} else {
 				toReturn.push("Differences:");
 				toReturn = toReturn.concat(data["errors"]);
-			} else {
-				toReturn.push("No differences");
 			}
 		}
 	} else {
