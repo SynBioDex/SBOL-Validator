@@ -139,8 +139,5 @@ class ValidationOptions:
         if self.insert_type:
             command += ["-t"]
 
-        if not self.return_file:
-            command += ["-no"]
-
         print(command)
         return command
