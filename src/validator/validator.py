@@ -38,7 +38,7 @@ class ValidationResult:
 
     def broken_validation_request(self, command):
         self.valid = False
-        self.errors = ["Something about your validation request is contradictory or poorly-formed.", " ".join(command)]
+        self.errors = ["Something about your validation request is contradictory or poorly-formed!", " ".join(command)]
 
     def json(self):
         return self.__dict__
