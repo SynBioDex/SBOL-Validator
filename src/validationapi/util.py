@@ -12,13 +12,13 @@ def do_validation(json):
 
     main_filename = os.path.join('work', str(uuid.uuid4()) + ".sbol")
     with open(main_filename, 'a+') as file:
-        file.write(json["main_file"])
+        file.write(json["main_file"].encode('utf8'))
 
     if json['options']['test_equality']:
         diff_filename = os.path.join('work', str(uuid.uuid4()) + ".sbol")
 
         with open(diff_filename, 'a+') as file:
-            file.write(json["diff_file"])
+            file.write(json["diff_file"].encode('utf8'))
 
         run = ValidationRun(options, main_filename, diff_filename)
     else:
