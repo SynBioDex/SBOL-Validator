@@ -32,9 +32,9 @@ class ValidationResult:
             self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
 
-        if options.return_file:
-            with open(options.output_file, 'r') as file:
-                self.result = file.read()
+            if options.return_file:
+                with open(options.output_file, 'r') as file:
+                    self.result = file.read()
 
     def broken_validation_request(self, command):
         self.valid = False
