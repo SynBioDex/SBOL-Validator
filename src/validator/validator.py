@@ -139,5 +139,4 @@ class ValidationOptions:
         if self.insert_type:
             command += ["-t"]
 
-        print(command)
         return command
