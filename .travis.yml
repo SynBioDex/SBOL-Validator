@@ -14,4 +14,5 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 script:
+  - cd src
   - python -m flask run
