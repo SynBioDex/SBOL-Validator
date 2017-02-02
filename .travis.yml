@@ -15,5 +15,4 @@ python:
 install: "pip install -r requirements.txt"
 script:
   - ls
-  - export FLASK_APP=validationapi.api
   - python -m flask run
