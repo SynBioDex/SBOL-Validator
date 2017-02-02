@@ -13,3 +13,7 @@ python:
   - "nightly" # currently points to 3.7-dev
 # command to install dependencies
 install: "pip install -r requirements.txt"
+script:
+  - ls
+  - export FLASK_APP=validationapi.api
+  - python -m flask run
