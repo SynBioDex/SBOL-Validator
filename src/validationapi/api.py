@@ -10,7 +10,7 @@ CORS(app)
 @app.route('/update/', methods=['GET', 'POST'], strict_slashes=False)
 def update():
     payload = request.data
-    signature = request.headers.get('X-Hub-Signature')
+    signature = request.headers.get('X-Hub-Signature').split('=')[1]
 
     if validate_update_request(payload, signature):
         return run_update()

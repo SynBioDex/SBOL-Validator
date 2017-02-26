@@ -32,6 +32,10 @@ def do_validation(json):
 def validate_update_request(body, signature):
     key = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'DEPLOY_SECRET')
 
+    print(signature)
+    print('------')
+    print(body)
+
     try:
         with open(key) as secret_file:
             secret = secret_file.readline().strip()
