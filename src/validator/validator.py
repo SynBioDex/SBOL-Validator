@@ -4,12 +4,13 @@
 ## 08/13/2016
 import subprocess
 import uuid
-import sys, os
+import traceback
+import os
 
 
 class ValidationResult:
     def __init__(self, output_file, equality):
-        self.equality = equality
+        self.check_equality = equality
         self.output_file = output_file
         self.valid = False
         self.errors = []
@@ -17,7 +18,13 @@ class ValidationResult:
     def digest_errors(self, output):
         self.errors = output.strip().split('\n')
 
-    def decipher(self, output):
+    def decipher(self, output, options):
+        if self.check_equality:
+            if "differ" in output or "not found in" in output:
+                self.equal = False
+            else:
+                self.equal = True
+
         if "Validation successful, no errors." not in output:
             self.valid = False
             self.digest_errors(output)
@@ -25,9 +32,13 @@ class ValidationResult:
             self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
 
+            if options.return_file:
+                with open(options.output_file, 'r') as file:
+                    self.result = file.read()
+
     def broken_validation_request(self, command):
         self.valid = False
-        self.errors = ["Something about your validation request is contradictory or poorly-formed.", " ".join(command)]
+        self.errors = ["Something about your validation request is contradictory or poorly-formed!", " ".join(command)]
 
     def json(self):
         return self.__dict__
@@ -44,13 +55,14 @@ class ValidationRun:
 	    # Attempt to run command
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
-            output = subprocess.check_output(command, universal_newlines=True, shell=True, stderr=subprocess.STDOUT)
-            result.decipher(output)
+            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
+            result.decipher(output, self.options)
         except subprocess.CalledProcessError as exception:
             #If the command fails, the file is not valid.
             result.valid = False
             result.errors += [exception.output, ]
-        except ValueError:
+        except ValueError as ve:
+            print(traceback.print_tb(ve.__traceback__))
             result.broken_validation_request(command)
 
         return result.json()
@@ -88,18 +100,19 @@ class ValidationOptions:
             self.output_file = self.output_file + '.fasta'
 
     def command(self, jar_path, validation_file, diff_file=None):
-        command = ["java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
+        command = ["/usr/bin/java", "-jar", jar_path, validation_file, "-o", self.output_file, "-l", self.language]
 
         if self.test_equality and diff_file:
             command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
-            return command
         elif self.test_equality and not diff_file:
+            print("Diff break")
             raise ValueError
 
         if self.subset_uri:
             command += ["-s", self.subset_uri]
 
         if self.provide_detailed_stack_trace and not self.fail_on_first_error:
+            print("FOF break")
             raise ValueError
 
         if self.fail_on_first_error:
@@ -125,8 +138,5 @@ class ValidationOptions:
 
         if self.insert_type:
             command += ["-t"]
-
-        if not self.return_file:
-            command += ["-no"]
 
         return command

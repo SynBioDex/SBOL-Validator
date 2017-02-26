@@ -228,19 +228,19 @@ function getOutputLanguage() {
 
 function parseData(data) {
 	var toReturn = [];
+	console.log(data);
 	if(data["valid"]) {
-		if(!data["equality"]) {
 			if(data["errors"][data["errors"].length - 1] === "Conversion failed.") {
 				toReturn = toReturn.concat(data["errors"]);
 			} else {
-				toReturn.push("<a href='../../" + data["output_file"] + "'>Validated and converted file</a>");
+				toReturn.push("<a href='" + data["output_file"] + "'>Validated and converted file</a>");
 			}
-		} else {
-			if(data["errors"].length > 0) {
+		 if(data["check_equality"]) {
+			if(data["equal"]) {
+				toReturn.push("No differences");
+			} else {
 				toReturn.push("Differences:");
 				toReturn = toReturn.concat(data["errors"]);
-			} else {
-				toReturn.push("No differences");
 			}
 		}
 	} else {
@@ -257,6 +257,7 @@ function displayValidationResult(data, textStatus, jqXHR) {
 }
 
 function apiError(data, textStatus, jqXHR) {
+	console.log(data);
 	alert("There was an error submitting your request. Try refreshing and submitting again.");
 }
 

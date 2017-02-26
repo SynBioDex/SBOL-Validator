@@ -1,10 +1,16 @@
 from flask import Flask, request, json
 from flask_cors import CORS
 from validationapi.util import do_validation
+from updater.updater import update as run_update
 
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route('/update/', methods=['GET', 'POST'], strict_slashes=False)
+def update():
+    return run_update()
+
 
 @app.route("/validate/", methods=["POST"], strict_slashes=False)
 def validate():
@@ -13,9 +19,12 @@ def validate():
     """
     validation_json = request.get_json()
     if validation_json is None:
+        print(request.data)
         raise InvalidUsage("Request content type must be application/json")
     else:
-        response = json.jsonify(do_validation(validation_json))
+        result = do_validation(validation_json)
+        result["output_file"] = request.url_root + result["output_file"]
+        response = json.jsonify(result)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -46,7 +55,6 @@ def handle_invalid_usage(error):
     Communicates invalid usage to the user
     """
     response = json.dumps(error.to_dict())
-    response.status_code = error.status_code
     return response
 
 if __name__ == '__main__':
