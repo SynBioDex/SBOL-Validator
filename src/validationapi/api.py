@@ -11,7 +11,7 @@ CORS(app)
 def update():
     payload = request.data
 
-    if request.headers.get('X-Hub-Signature') is not None:
+    if request.headers.get('X-Hub-Signature') is None:
         return run_update()
 
     signature = request.headers.get('X-Hub-Signature').split('=')[1]
