@@ -30,13 +30,13 @@ def do_validation(json):
     return result
 
 def validate_update_request(body, signature):
-    secret_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'DEPLOY_SECRET')
+    key = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'DEPLOY_SECRET')
 
     try:
-        with open(secret_path) as secret_file:
+        with open(key) as secret_file:
             secret = secret_file.readline().strip()
     except FileNotFoundError:
-        print(secret_path)
+        print(key)
         return True
 
     message = hmac.new(secret, msg=body, digestmod=sha1)
