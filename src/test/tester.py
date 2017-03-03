@@ -1,1 +1,4 @@
-import validationapi.api as api
+from test.util import check_commands
+
+
+check_commands()
