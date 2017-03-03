@@ -1,4 +1,5 @@
 # SBOL Validator
+[![Build Status](https://travis-ci.org/SynBioDex/SBOL-Validator.svg?branch=master)](https://travis-ci.org/SynBioDex/SBOL-Validator)  
 A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
