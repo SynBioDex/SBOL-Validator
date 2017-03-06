@@ -34,6 +34,7 @@ def check_commands():
     print("All " + str(len(test_cases)) + " commands correct.")
 
 def check_deployment(deployment):
+    print(deployment)
     form_url = deployment["base"] + deployment["form"]
     api_url = deployment["base"] + deployment["api"]
 
@@ -48,7 +49,7 @@ def check_deployment(deployment):
 
 
 def check_deployments():
-    deployments_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'test_cases.json')
+    deployments_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'deployments.json')
     deployments_json = open(deployments_file, 'r').read()
     deployments = json.loads(deployments_json)
 
