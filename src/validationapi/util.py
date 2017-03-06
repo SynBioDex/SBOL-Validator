@@ -36,9 +36,8 @@ def validate_update_request(body, signature):
         with open(key) as secret_file:
             secret = secret_file.readline().strip()
     except FileNotFoundError:
-        print(key)
         return True
-    print(secret)
+
     message = hmac.new(bytearray(secret, 'utf8'), msg=body, digestmod=sha1)
 
     return hmac.compare_digest(message.hexdigest(), signature)
