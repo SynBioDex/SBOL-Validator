@@ -33,8 +33,7 @@ def check_commands():
 
     print("All " + str(len(test_cases)) + " commands correct.")
 
-def check_deployment(deployment):
-    print(deployment)
+def check_deployment(deployment, sbol):
     form_url = deployment["base"] + deployment["form"]
     api_url = deployment["base"] + deployment["api"]
 
@@ -47,12 +46,49 @@ def check_deployment(deployment):
     if api_request.status_code != 405:
         raise ValueError
 
+    request = {'options': {'language' : 'GenBank',
+                           'test_equality': False,
+                           'check_uri_compliance': False,
+                           'check_completeness': False,
+                           'check_best_practices': False,
+                           'fail_on_first_error': False,
+                           'provide_detailed_stack_trace': False,
+                           'subset_uri': '',
+                           'uri_prefix': '',
+                           'version': '',
+                           'insert_type': False,
+                           'main_file_name': 'main file',
+                           'diff_file_name': 'comparison file',
+                          },
+               'return_file': True,
+               'main_file': sbol
+              }
+
+
+    resp = requests.post("https://apps.nonasoftware.org/validate/", json=request)
+
+    if resp.status_code != 200:
+        raise ValueError
+
+    validation = resp.json()
+
+    if not validation['valid']:
+        raise ValueError
+
+    if validation['check_equality']:
+        raise ValueError
+
+    if len(validation['errors']) != 1:
+        raise ValueError
 
 def check_deployments():
     deployments_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'deployments.json')
     deployments_json = open(deployments_file, 'r').read()
     deployments = json.loads(deployments_json)
 
+    sbol_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'sequence1.xml')
+    sbol = open(sbol_file, 'r').read()
+
     for deployment in deployments:
-        check_deployment(deployment)
+        check_deployment(deployment, sbol)
 
