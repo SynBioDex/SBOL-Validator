@@ -7,3 +7,4 @@ src/work/*
 sbol-validator/*
 *.bat
 src/DEPLOY_SECRET
+.DS_Store
