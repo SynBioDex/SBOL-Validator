@@ -1,9 +1,9 @@
 import json
 import os
+import requests
 from validator.validator import ValidationOptions
 
 def check_commands():
-    print("Checking commands")
     test_cases_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'test_cases.json')
     test_cases_json = open(test_cases_file, 'r').read()
     test_cases = json.loads(test_cases_json)
@@ -32,3 +32,26 @@ def check_commands():
             raise ValueError
 
     print("All " + str(len(test_cases)) + " commands correct.")
+
+def check_deployment(deployment):
+    form_url = deployment["base"] + deployment["form"]
+    api_url = deployment["base"] + deployment["api"]
+
+    form_request = requests.get(form_url)
+    api_request = requests.get(api_url)
+
+    if form_request.status_code != 200:
+        raise ValueError
+
+    if api_request.status_code != 405:
+        raise ValueError
+
+
+def check_deployments():
+    deployments_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'test_cases.json')
+    deployments_json = open(deployments_file, 'r').read()
+    deployments = json.loads(deployments_json)
+
+    for deployment in deployments:
+        check_deployment(deployment)
+
