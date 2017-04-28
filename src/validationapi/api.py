@@ -1,6 +1,6 @@
 from flask import Flask, request, json
 from flask_cors import CORS
-from validationapi.util import do_validation
+from validationapi.util import do_validation, validate_update_request
 from updater.updater import update as run_update
 
 
@@ -9,8 +9,17 @@ CORS(app)
 
 @app.route('/update/', methods=['GET', 'POST'], strict_slashes=False)
 def update():
-    return run_update()
+    payload = request.data
 
+    if request.headers.get('X-Hub-Signature') is None:
+        return run_update()
+
+    signature = request.headers.get('X-Hub-Signature').split('=')[1]
+
+    if validate_update_request(payload, signature):
+        return run_update()
+    else:
+        return "Forbidden", 403
 
 @app.route("/validate/", methods=["POST"], strict_slashes=False)
 def validate():

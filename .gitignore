@@ -6,3 +6,5 @@ src/work/*
 *.swp
 sbol-validator/*
 *.bat
+src/DEPLOY_SECRET
+.DS_Store

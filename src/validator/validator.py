@@ -105,14 +105,12 @@ class ValidationOptions:
         if self.test_equality and diff_file:
             command += ["-e", diff_file, "-mf", self.main_file_name, "-cf", self.diff_file_name]
         elif self.test_equality and not diff_file:
-            print("Diff break")
             raise ValueError
 
         if self.subset_uri:
             command += ["-s", self.subset_uri]
 
         if self.provide_detailed_stack_trace and not self.fail_on_first_error:
-            print("FOF break")
             raise ValueError
 
         if self.fail_on_first_error:

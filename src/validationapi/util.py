@@ -1,4 +1,6 @@
 from validator.validator import ValidationOptions, ValidationResult, ValidationRun
+from hashlib import sha1
+import hmac
 import uuid
 import os
 
@@ -26,3 +28,16 @@ def do_validation(json):
 
     result = run.execute()
     return result
+
+def validate_update_request(body, signature):
+    key = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'DEPLOY_SECRET')
+
+    try:
+        with open(key) as secret_file:
+            secret = secret_file.readline().strip()
+    except OSError:
+        return True
+
+    message = hmac.new(bytearray(secret, 'utf8'), msg=body, digestmod=sha1)
+
+    return hmac.compare_digest(message.hexdigest(), signature)
