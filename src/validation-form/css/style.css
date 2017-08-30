@@ -11,6 +11,9 @@
 #submit {
     float: right;
 }
+.container {
+	margin-bottom:  60px;
+}
 
 .footer {
   position: fixed;

@@ -3,10 +3,5 @@
         "base": "http://www.async.ece.utah.edu",
         "form": "/sbol-validator",
         "api": "/validate"
-    },
-    {
-        "base": "http://apps.nonasoftware.org",
-        "form": "/sbol-validator",
-        "api": "/validate"
     }
 ]
