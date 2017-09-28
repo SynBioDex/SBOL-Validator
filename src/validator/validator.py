@@ -92,8 +92,8 @@ class ValidationOptions:
             setattr(self, key, value)
         self.output_file = os.path.join('work', str(uuid.uuid4()))
 
-        if self.language == 'SBOL2' or self.language == 'SBOL1':
-            self.output_file = self.output_file + ".xml"
+        if self.language in ['SBOL1', 'SBOL2', 'SBML']:
+            self.output_file = self.output_file + ".rdf"
         elif self.language == 'GenBank':
             self.output_file = self.output_file + '.gb'
         else:

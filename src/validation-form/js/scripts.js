@@ -212,6 +212,7 @@ function getDiffFileName() {
 function getOutputLanguage() {
 	var SBOL1 = document.getElementById("sbol11");
 	var SBOL2 = document.getElementById("sbol20");
+	var SBML = document.getElementById("sbml");
 	var GenBank = document.getElementById("genbank");
 	var FASTA = document.getElementById("fasta");
 
@@ -223,6 +224,8 @@ function getOutputLanguage() {
 		return "GenBank";
 	} else if(FASTA.checked) {
 		return "FASTA";
+	} else if(SBML.checked) {
+		return "SBML";
 	}
 }
 
