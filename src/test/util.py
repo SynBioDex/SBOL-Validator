@@ -65,7 +65,7 @@ def check_deployment(deployment, sbol):
               }
 
 
-    resp = requests.post("https://apps.nonasoftware.org/validate/", json=request)
+    resp = requests.post(api_url, json=request)
 
     if resp.status_code != 200:
         raise ValueError
