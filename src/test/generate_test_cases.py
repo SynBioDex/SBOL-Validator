@@ -22,7 +22,7 @@ names = [
 ]
 
 problem_space = [
-    ["SBOL2", "SBOL1", "GenBank", "FASTA"],
+    ["SBOL2", "SBOL1", "GenBank", "FASTA", "SBML"],
     [False, "subset uri"],
     [False, True],
     [False, True],
