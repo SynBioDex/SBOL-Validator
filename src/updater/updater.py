@@ -14,7 +14,7 @@ def update():
     try:
         if not subprocess.check_output(["/usr/bin/git pull"], shell=True, cwd=project_dir):
             return "Update unsuccessful. Check the logs."
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         print(e)
 
     uwsgi.reload()
