@@ -11,8 +11,11 @@ except ImportError:
 def update():
     project_dir = dirname(dirname(abspath(__file__)))
 
-    if not subprocess.check_output(["/usr/bin/git pull"], shell=True, cwd=project_dir):
-        return "Update unsuccessful. Check the logs."
+    try:
+        if not subprocess.check_output(["/usr/bin/git pull"], shell=True, cwd=project_dir):
+            return "Update unsuccessful. Check the logs."
+    except subprocess.CalledProcessError as e:
+        print(e)
 
     uwsgi.reload()
 
