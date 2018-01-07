@@ -15,18 +15,18 @@ function clearPaste(id) {
 	fileInput.value = "";
 }
 
-function clearFileInput(id) { 
-    var oldInput = document.getElementById(id); 
+function clearFileInput(id) {
+    var oldInput = document.getElementById(id);
 
-    var newInput = document.createElement("input"); 
+    var newInput = document.createElement("input");
 
-    newInput.type = "file"; 
-    newInput.id = oldInput.id; 
-    newInput.name = oldInput.name; 
-    newInput.className = oldInput.className; 
-    newInput.style.cssText = oldInput.style.cssText; 
+    newInput.type = "file";
+    newInput.id = oldInput.id;
+    newInput.name = oldInput.name;
+    newInput.className = oldInput.className;
+    newInput.style.cssText = oldInput.style.cssText;
 
-    oldInput.parentNode.replaceChild(newInput, oldInput); 
+    oldInput.parentNode.replaceChild(newInput, oldInput);
 }
 
 function setUpload() {
@@ -147,7 +147,7 @@ function buildRequest() {
 			"main_file": mainFile,
 			"return_file": true,
 		};
-	}	
+	}
 
 	return fullRequest;
 }
@@ -261,16 +261,16 @@ function displayValidationResult(data, textStatus, jqXHR) {
 
 function apiError(data, textStatus, jqXHR) {
 	console.log(data);
-	alert("There was an error submitting your request. Try refreshing and submitting again.");
+	alert("There was an error submitting your request. Try refreshing and submitting again. If the problem persists, try clearing your cache.");
 }
 
 function submitValidationRequest() {
 	if(verifyForm()) {
 		$.ajax({
 			url: '/validate/',
-			data: JSON.stringify(buildRequest()), 
+			data: JSON.stringify(buildRequest()),
 			success: displayValidationResult,
-			error: apiError,  
+			error: apiError,
 			type: 'POST',
 			contentType: 'application/json'})
 	}
