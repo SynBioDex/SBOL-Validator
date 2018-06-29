@@ -37,11 +37,11 @@
 									<div class="col-md-11">
 										<div class="form-group">
 											<label for="primaryInputFile">SBOL/GenBank/FASTA File
-												<img src="img/question.png" width="10px" title="The main file for validation/conversion" />
+												<img src="img/question.png" width="10px" title="The main file for conversion" />
 											</label>
 											<input type="file" id="primaryInputFile" name="primaryInputFile" size="10" onchange="mainFileChanged()" />
 											<p class="help-block" id="primaryFileHelp">
-												Upload an SBOL, GenBank, or FASTA file for validation/conversion.
+												Upload an SBOL, GenBank, or FASTA file for conversion.
 											</p>
 										</div>
 									</div>
@@ -54,7 +54,7 @@
 									</label>
 									<textarea class="form-control" rows="10" id="pastedPrimaryInputFile" name="pastedPrimayInputFile"></textarea>
 									<p class="help-block" id="primaryPasteHelp">
-										Paste an SBOL, GenBank, or FASTA file for validation/conversion.
+										Paste an SBOL, GenBank, or FASTA file for conversion.
 									</p>
 								</div>
 							</div>
@@ -103,7 +103,7 @@
 										</label>
 									</div>
 									<div class="form-group">
-										<label for="topLevelToConvert">TopLevel URI <img src="img/question.png" width="10px" title="Selects a specific TopLevel (and referenced objects) for validation/conversion" />
+										<label for="topLevelToConvert">TopLevel URI <img src="img/question.png" width="10px" title="Selects a specific TopLevel (and referenced objects) for conversion" />
 										</label>
 										<input type="text" class="form-control" id="topLevelToConvert" name="topLevelToConvert" placeholder="TL URI" />
 									</div>
@@ -135,7 +135,7 @@
 						<div class="col-md-1"></div>
 					</div>
 					<div class="row" id="submit">
-						<button onclick="submitValidationRequest()" class="btn btn-primary" type="submit">Validate</button>
+						<button onclick="submitValidationRequest()" class="btn btn-primary" type="submit">Convert</button>
 					</div>
 				</form>
 			</div>
