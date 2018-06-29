@@ -3,8 +3,6 @@
 A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
-The current release of the validator is live [here](http://apps.nonasoftware.org/sbol-validator/) with an API endpoint found at `http://apps.nonasoftware.org/validate/`.
-
 The bleeding-edge version of the validator can be found [here](http://www.async.ece.utah.edu/sbol-validator/) with an API endpoint found at `http://www.async.ece.utah.edu/validate/`.
 
 ### Installation
