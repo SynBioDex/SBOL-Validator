@@ -10,3 +10,6 @@ install: "pip install -r requirements.txt"
 script:
   - cd src
   - python -m test.tester
+after_success:
+  - docker build -t zachzundel/sbolvalidator:snapshot .
+  - docker/push.sh

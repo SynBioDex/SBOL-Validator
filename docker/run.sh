@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-cd /opt/SBOL-Validator
-source sbol-validator-venv/bin/activate
-cd src
+cd /opt/SBOL-Validator/src
 export FLASK_APP=validationapi.api
 
 nginx &
@@ -10,6 +8,6 @@ nginx &
 rm -rf work
 mkdir work
 
-../sbol-validator-venv/bin/uwsgi --ini sbol-validator.ini
+uwsgi --ini sbol-validator.ini
 
 
