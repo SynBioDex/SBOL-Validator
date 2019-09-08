@@ -6,7 +6,7 @@ WORKDIR /opt/SBOL-Validator
 
 COPY requirements.txt .
 COPY src src
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx-validator.conf /etc/nginx/nginx.conf
 COPY docker/sbol-validator.ini /opt/SBOL-Validator/src/sbol-validator.ini
 COPY docker/run.sh /opt/SBOL-Validator
 

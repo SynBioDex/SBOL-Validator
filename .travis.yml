@@ -14,6 +14,6 @@ jobs:
         - cd src
         - python -m test.tester
     - stage: push
-      install: docker build -t zachzundel/sbolvalidator:snapshot .
+      install: docker/build.sh
       script: docker/push.sh
       if: branch = master AND type = push
