@@ -35,13 +35,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Build Docker containers
-        run: |
-          docker/build.sh
-          docker/push.sh
       - uses: appleboy/ssh-action@master
-        name: Pull new containers and restart on sbolstandard.org
+        name: Deploy container
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -53,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@master
-        name: Pull new containers and restart on sbolstandard.org
+        name: Deploy convertor
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
