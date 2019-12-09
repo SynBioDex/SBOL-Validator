@@ -1,0 +1,25 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  validator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v.0.0.2
+      - name: Pull new containers and restart on sbolstandard.org
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          command: systemctl restart validator
+  converter:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: appleboy/ssh-action@v.0.0.2
+        - name: Pull new containers and restart on sbolstandard.org
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            command: systemctl restart converter
