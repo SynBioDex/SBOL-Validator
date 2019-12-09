@@ -8,13 +8,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    apt: libssl-dev
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-python@v1
         with: 
           python-version: '3.x'
       - run: |
+          sudo apt-get install libssl-dev
           pip install -r requirements.txt
           cd src
           python -m test.tester
