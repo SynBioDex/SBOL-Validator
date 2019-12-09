@@ -39,7 +39,7 @@ jobs:
         run: |
           docker/build.sh
           docker/push.sh
-      - uses: appleboy/ssh-action@v.0.0.2
+      - uses: appleboy/ssh-action@master
         name: Pull new containers and restart on sbolstandard.org
         with:
           host: ${{ secrets.HOST }}
@@ -51,7 +51,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-     - uses: appleboy/ssh-action@v.0.0.2
+     - uses: appleboy/ssh-action@master
         name: Pull new containers and restart on sbolstandard.org
         with:
           host: ${{ secrets.HOST }}
