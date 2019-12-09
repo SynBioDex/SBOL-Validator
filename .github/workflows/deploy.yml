@@ -41,7 +41,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          command: systemctl restart validator
+          script: systemctl restart validator
   
   converter:
     needs: build
@@ -53,4 +53,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          command: systemctl restart converter
+          script: systemctl restart converter
