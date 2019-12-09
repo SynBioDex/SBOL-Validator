@@ -94,6 +94,8 @@ class ValidationOptions:
 
         if self.language in ['SBOL1', 'SBOL2', 'SBML']:
             self.output_file = self.output_file + ".rdf"
+        elif self.language == 'GFF3':
+            self.output_file = self.output_file + '.gff'
         elif self.language == 'GenBank':
             self.output_file = self.output_file + '.gb'
         else:
