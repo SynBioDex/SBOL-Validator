@@ -8,6 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    apt: libssl-dev
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-python@v1
