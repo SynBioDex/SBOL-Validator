@@ -1,0 +1,59 @@
+name: Deploy
+
+on:
+  push: 
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        with: 
+          python-version: '3.x'
+      - run: |
+          cd src
+          python -m test.tester
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker/build.sh
+          docker/push.sh
+
+  validator:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build Docker containers
+        run: |
+          docker/build.sh
+          docker/push.sh
+      - uses: appleboy/ssh-action@master
+        name: Pull new containers and restart on sbolstandard.org
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          command: systemctl restart validator
+  
+  converter:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
+        name: Pull new containers and restart on sbolstandard.org
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          command: systemctl restart converter
