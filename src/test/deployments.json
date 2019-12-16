@@ -1,7 +1,0 @@
-[
-    {
-        "base": "http://www.async.ece.utah.edu",
-        "form": "/sbol-validator",
-        "api": "/validate/"
-    }
-]
