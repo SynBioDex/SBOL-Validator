@@ -50,7 +50,7 @@ resp = requests.post("https://validator.sbolstandard.org/validate/", json=reques
 
 ```javascript
 request({ method: 'POST',
-              uri: 'http://validator.sbolvalidator.org/validate/',
+              uri: 'https://validator.sbolvalidator.org/validate/',
               'content-type': 'application/json',
               json: { 'options': {  'language' : 'GenBank',
                                 'test_equality': false,
