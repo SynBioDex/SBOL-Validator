@@ -96,6 +96,8 @@ class ValidationOptions:
             self.output_file = self.output_file + ".rdf"
         elif self.language == 'GFF3':
             self.output_file = self.output_file + '.gff'
+        elif self.language == 'SnapGene':
+            self.output_file = self.output_file + '.dna'
         elif self.language == 'GenBank':
             self.output_file = self.output_file + '.gb'
         else:

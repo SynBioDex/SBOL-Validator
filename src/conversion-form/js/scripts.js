@@ -157,6 +157,7 @@ function getOutputLanguage() {
 	var SBOL1 = document.getElementById("sbol11");
 	var SBOL2 = document.getElementById("sbol20");
 	var GFF3 = document.getElementById("gff3");
+	var SnapGene = document.getElementById("snapgene");
 	var GenBank = document.getElementById("genbank");
 	var FASTA = document.getElementById("fasta");
 
@@ -166,6 +167,8 @@ function getOutputLanguage() {
 		return "SBOL2";
 	} else if(GenBank.checked) {
 		return "GenBank";
+	} else if(SnapGene.checked) {
+		return "SnapGene";
 	} else if(FASTA.checked) {
 		return "FASTA";
 	} else if(GFF3.checked) {
@@ -193,7 +196,7 @@ function displayValidationResult(data, textStatus, jqXHR) {
 	var interpreted = parseData(data);
 	document.getElementById("result").innerHTML = interpreted.join("<br>");
 	document.getElementById("myModal").style.display = "block";
-}
+}v
 
 function apiError(data, textStatus, jqXHR) {
 	console.log(data);

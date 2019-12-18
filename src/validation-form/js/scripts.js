@@ -214,6 +214,7 @@ function getOutputLanguage() {
 	var SBOL2 = document.getElementById("sbol20");
 	var GFF3 = document.getElementById("gff3");
 	var GenBank = document.getElementById("genbank");
+	var SnapGene = document.getElementById("snapgene");
 	var FASTA = document.getElementById("fasta");
 
 	if(SBOL1.checked) {
@@ -222,6 +223,8 @@ function getOutputLanguage() {
 		return "SBOL2";
 	} else if(GenBank.checked) {
 		return "GenBank";
+	} else if(SnapGene.checked) {
+		return "SnapGene";
 	} else if(FASTA.checked) {
 		return "FASTA";
 	} else if(GFF3.checked) {
