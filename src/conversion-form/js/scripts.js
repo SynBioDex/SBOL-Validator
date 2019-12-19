@@ -196,7 +196,7 @@ function displayValidationResult(data, textStatus, jqXHR) {
 	var interpreted = parseData(data);
 	document.getElementById("result").innerHTML = interpreted.join("<br>");
 	document.getElementById("myModal").style.display = "block";
-}v
+}
 
 function apiError(data, textStatus, jqXHR) {
 	console.log(data);
