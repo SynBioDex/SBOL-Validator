@@ -3,7 +3,7 @@
 A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
-The bleeding-edge version of the validator can be found [here](https://validator.sbolstandard.org) with an API endpoint found at `https://validator.sbolstandard.org/validate`.
+The validator can be found [here](https://validator.sbolstandard.org) with an API endpoint found at `https://validator.sbolstandard.org/validate`.
 
 ### Installation
 First, bit about the way the application is structured.
