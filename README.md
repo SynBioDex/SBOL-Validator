@@ -120,3 +120,49 @@ With that, your validator should be online!
 
 ### API
 The API documentation can be found [here](http://synbiodex.github.io/SBOL-Validator)
+
+### Docker
+The application is packaged into two Docker containers to make things simpler to deploy and manage.
+The container images are automatically built when the GitHub repository is updated and pushed to Docker Hub.
+Their image names are `zachzundel/sbolvalidator` and `zachzundel/sbolconverter`, and the latest build is available at the `snapshot` tag for each. 
+
+To deploy the containers on your system, create a Systemd unitfile to manage and run the container.
+An example file for the SBOL validator is shown below.
+The unit file should be placed in the `/etc/systemd/system/` directory. 
+
+```
+[Unit]
+Description=SBOL Validator
+
+# This unitfile depends on the Docker service
+Requires=docker.service network-online.target
+After=docker.service network-online.target
+
+[Service]
+# Pulling the Docker image can take a while, so don't timeout
+TimeoutStartSec=0
+
+Restart=always
+
+# Before starting, stop any existing containers...
+ExecStartPre=-/usr/bin/docker stop %n
+
+# ...remove them...
+ExecStartPre=-/usr/bin/docker rm %n
+
+# ...and pull any new ones.
+ExecStartPre=-/usr/bin/docker pull zachzundel/sbolvalidator:snapshot
+
+ExecStart=/usr/bin/docker run --rm --name %n --publish 9000:80 zachzundel/sbolvalidator:snapshot
+ExecStop=/usr/bin/docker stop %n
+
+[Install]
+WantedBy=multi-user.target
+```
+
+If the file is named `validator.service`, it can then be started with the command `systemctl start validator`, it can be configured to start automatically with `systemctl enable validator`, and its status can be checked with `systemctl status validator`. 
+
+### Deployment
+The validator is deployed on the SBOL standard webserver, as is the converter.
+They are configured in a manner shown above.
+A GitHub action is configured to automatically update the services when a new image is pushed to Docker Hub.
