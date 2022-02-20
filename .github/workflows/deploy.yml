@@ -14,7 +14,7 @@ jobs:
         with: 
           python-version: '3.x'
       - run: |
-          sudo apt-get install libssl1.0-dev
+          sudo apt-get install libssl1.1-dev
           pip install -r requirements.txt
           cd src
           python -m test.tester
