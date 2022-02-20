@@ -39,7 +39,7 @@
 											<label for="primaryInputFile">SBOL/GenBank/FASTA File
 												<img src="img/question.png" width="10px" title="The main file for validation/conversion" />
 											</label>
-											<input type="file" id="primaryInputFile" name="primaryInputFile" size="10" onchange="mainFileChanged()" />
+											<input type="file" id="primaryInputFile" name="primaryInputFile" size="10" onchange="mainFileChanged()" onclick="this.value=null;" />
 											<p class="help-block" id="primaryFileHelp">
 												Upload an SBOL, GenBank, or FASTA file for validation/conversion.
 											</p>
@@ -51,7 +51,7 @@
 											<label for="diffInputFile">Comparison file
 												<img src="img/question.png" width="10px" title="The file used for comparison -- must be SBOL" />
 											</label>
-											<input type="file" id="diffInputFile" name="diffInputFile" onchange="diffFileChanged()" />
+											<input type="file" id="diffInputFile" name="diffInputFile" onchange="diffFileChanged()" onclick="this.value=null;" />
 											<p class="help-block" id="diffFileHelp">
 												Upload an SBOL file for comparison.
 											</p>

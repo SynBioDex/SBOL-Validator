@@ -39,7 +39,7 @@
 											<label for="primaryInputFile">SBOL/GenBank/FASTA File
 												<img src="img/question.png" width="10px" title="The main file for conversion" />
 											</label>
-											<input type="file" id="primaryInputFile" name="primaryInputFile" size="10" onchange="mainFileChanged()" />
+											<input type="file" id="primaryInputFile" name="primaryInputFile" size="10" onchange="mainFileChanged()" onclick="this.value=null;" />
 											<p class="help-block" id="primaryFileHelp">
 												Upload an SBOL, GenBank, or FASTA file for conversion.
 											</p>
