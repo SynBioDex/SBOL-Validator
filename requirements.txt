@@ -12,9 +12,9 @@ Jinja2==3.1.4
 MarkupSafe>=2.0
 packaging==16.8
 pyparsing==2.1.10
+pyuwsgi>=2.0.22
 requests==2.32.2
 six==1.10.0
 smmap2==2.0.1
 urllib3==1.26.19
-uWSGI==2.0.22
 Werkzeug==3.0.3
