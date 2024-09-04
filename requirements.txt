@@ -15,6 +15,6 @@ pyparsing==2.1.10
 requests==2.32.2
 six==1.10.0
 smmap2==2.0.1
-urllib3==1.26.5
+urllib3==1.26.19
 uWSGI==2.0.20
 Werkzeug==3.0.3
