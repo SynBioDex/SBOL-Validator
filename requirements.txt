@@ -8,7 +8,7 @@ Flask-Cors==3.0.9
 gitdb2==2.0.0
 idna==2.7
 itsdangerous==1.1.0
-Jinja2==2.11.3
+Jinja2==3.1.4
 MarkupSafe==1.1.1
 packaging==16.8
 pyparsing==2.1.10
