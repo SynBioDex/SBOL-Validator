@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.9-alpine
 
 RUN apk add nginx openjdk8 python3-dev build-base linux-headers pcre-dev bash
 
