@@ -38,7 +38,7 @@ jobs:
       - uses: appleboy/ssh-action@master
         name: Deploy container
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ variables.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: systemctl restart validator
@@ -50,7 +50,7 @@ jobs:
       - uses: appleboy/ssh-action@master
         name: Deploy convertor
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ variables.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: systemctl restart converter
