@@ -17,4 +17,4 @@ requests==2.32.2
 six==1.10.0
 smmap2==2.0.1
 urllib3==1.26.19
-Werkzeug==3.0.6
+Werkzeug==3.1.4
