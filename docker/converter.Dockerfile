@@ -1,6 +1,6 @@
 FROM python:3.9-alpine
 
-RUN apk add nginx openjdk8 python3-dev build-base linux-headers pcre-dev bash
+RUN apk add nginx openjdk17-jre python3-dev build-base linux-headers pcre-dev bash
 
 WORKDIR /opt/SBOL-Validator
 
