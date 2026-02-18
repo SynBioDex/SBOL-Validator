@@ -55,6 +55,7 @@ class ValidationRun:
 	    # Attempt to run command
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
+            print command
             output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
             result.decipher(output, self.options)
         except subprocess.CalledProcessError as exception:
