@@ -6,7 +6,13 @@ import subprocess
 import uuid
 import traceback
 import os
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 class ValidationResult:
     def __init__(self, output_file, equality):
@@ -55,7 +61,7 @@ class ValidationRun:
 	    # Attempt to run command
         try:
             command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
-            print(command)
+            logger.info("Running command: %s", " ".join(command))
             output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
             result.decipher(output, self.options)
         except subprocess.CalledProcessError as exception:
