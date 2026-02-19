@@ -156,7 +156,7 @@ function getMainFileName() {
 function getOutputLanguage() {
 	var SBOL1 = document.getElementById("sbol11");
 	var SBOL2 = document.getElementById("sbol20");
-	var SBOL3 = document.getElementById("sbol30");
+	var SBOL3 = document.getElementById("sbol32");
 	var GFF3 = document.getElementById("gff3");
 	var GenBank = document.getElementById("genbank");
 	var FASTA = document.getElementById("fasta");
