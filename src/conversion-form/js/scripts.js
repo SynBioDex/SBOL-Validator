@@ -156,6 +156,7 @@ function getMainFileName() {
 function getOutputLanguage() {
 	var SBOL1 = document.getElementById("sbol11");
 	var SBOL2 = document.getElementById("sbol20");
+	var SBOL3 = document.getElementById("sbol30");
 	var GFF3 = document.getElementById("gff3");
 	var GenBank = document.getElementById("genbank");
 	var FASTA = document.getElementById("fasta");
@@ -164,6 +165,8 @@ function getOutputLanguage() {
 		return "SBOL1";
 	} else if(SBOL2.checked) {
 		return "SBOL2";
+	} else if(SBOL3.checked) {
+		return "SBOL3";
 	} else if(GenBank.checked) {
 		return "GenBank";
 	} else if(FASTA.checked) {
