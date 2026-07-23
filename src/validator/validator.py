@@ -17,6 +17,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ValidationResult:
+    # Status lines the SBOL-Converter prints that are not validation errors and should
+    # not surface to the user (e.g. among a comparison's differences).
+    STATUS_LINES = frozenset([
+        "Validation successful, no errors.",
+        "Either Validate or Convert to/from SBOL2",
+    ])
+
     def __init__(self, output_file, equality):
         self.check_equality = equality
         self.output_file = output_file
@@ -24,7 +31,10 @@ class ValidationResult:
         self.errors = []
 
     def digest_errors(self, output):
-        self.errors = output.strip().split('\n')
+        self.errors = [
+            line for line in output.strip().split('\n')
+            if line.strip() and line.strip() not in self.STATUS_LINES
+        ]
 
     def decipher(self, output, options):
         if self.check_equality:
@@ -33,16 +43,24 @@ class ValidationResult:
             else:
                 self.equal = True
 
-        if "Validation successful, no errors." not in output:
-            self.valid = False
+        succeeded = "Validation successful, no errors." in output
+
+        # The SBOL-Converter is silent on a successful conversion (e.g. SBOL2<->SBOL3)
+        # and exits non-zero on any error, so reaching this point with a written
+        # output file signals success even without the validation message.
+        if not succeeded and options.return_file:
+            succeeded = os.path.exists(options.output_file) and os.path.getsize(options.output_file) > 0
+
+        if succeeded:
             self.digest_errors(output)
-        else:
-            self.digest_errors(output.strip(u"Validation successful, no errors."))
             self.valid = True
 
-            if options.return_file:
+            if options.return_file and os.path.exists(options.output_file):
                 with open(options.output_file, 'r') as file:
                     self.result = file.read()
+        else:
+            self.valid = False
+            self.digest_errors(output)
 
     def broken_validation_request(self, command):
         self.valid = False
@@ -62,14 +80,15 @@ class ValidationRun:
 
 	    # Attempt to run command
         try:
-            command = self.options.command("libSBOLj.jar", self.validation_file, self.diff_file)
+            command = self.options.command("sbol-converter.jar", self.validation_file, self.diff_file)
             logger.info("Running command: %s", " ".join(command))
-            output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
+            try:
+                output = subprocess.check_output(command, universal_newlines=True, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError as exception:
+                # The SBOL-Converter exits non-zero both for an invalid document and when a
+                # comparison finds differences; decipher classifies each from the output.
+                output = exception.output
             result.decipher(output, self.options)
-        except subprocess.CalledProcessError as exception:
-            #If the command fails, the file is not valid.
-            result.valid = False
-            result.errors += [exception.output, ]
         except ValueError as ve:
             print(traceback.print_tb(ve.__traceback__))
             result.broken_validation_request(command)
