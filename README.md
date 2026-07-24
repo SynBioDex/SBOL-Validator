@@ -1,9 +1,12 @@
 # SBOL Validator
 [![Build Status](https://travis-ci.org/SynBioDex/SBOL-Validator.svg?branch=master)](https://travis-ci.org/SynBioDex/SBOL-Validator)  
-A web-based validator for SBOL files backed by libSBOLj's validation runtimes. This validator offers support for SBOL2, SBOL1.1, and GenBank.
+A web-based validator for SBOL files backed by the [SBOL-Converter](https://github.com/SynBioDex/SBOL-Converter), which bundles libSBOLj (SBOL2) and libSBOLj3 (SBOL3). This validator offers support for SBOL3, SBOL2, SBOL1.1, GenBank, FASTA, and GFF3, including conversion between them.
 Furthermore, it is accessible through a web GUI or a RESTful API. 
 
 The validator can be found [here](https://validator.sbolstandard.org) with an API endpoint found at `https://validator.sbolstandard.org/validate`.
+
+### Validation engine
+The backend shells out to `src/sbol-converter.jar`, the `jar-with-dependencies` build of the [SBOL-Converter](https://github.com/SynBioDex/SBOL-Converter) (which bundles libSBOLj and libSBOLj3). To update it, download the latest `sbol-converter-*-jar-with-dependencies.jar` asset from the [SBOL-Converter releases](https://github.com/SynBioDex/SBOL-Converter/releases) and replace `src/sbol-converter.jar`. A Java 21+ runtime is required.
 
 ### Installation
 First, bit about the way the application is structured.
