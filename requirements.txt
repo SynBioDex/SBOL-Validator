@@ -4,7 +4,7 @@ chardet==3.0.4
 Click>=8.0
 dulwich==0.18.5
 Flask==2.2.5
-Flask-Cors==5.0.0
+Flask-Cors==6.0.0
 gitdb2==2.0.0
 idna==3.7
 itsdangerous>=2.0
